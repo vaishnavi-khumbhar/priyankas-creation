@@ -52,7 +52,7 @@ export default function Navbar() {
   const [mobileProducts, setMobileProducts] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false); // tablet / mobile slide-down
+  const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState("");
   const [focused, setFocused] = useState(false);
 
@@ -132,7 +132,7 @@ export default function Navbar() {
               <span className="block truncate text-[13px] font-semibold text-brand-ink">{p.name}</span>
               <span className="text-[10px] uppercase tracking-[0.14em] text-brand-gold">{p.category}</span>
             </span>
-            <span className="shrink-0 font-display text-sm font-bold text-green-600">₹{p.price}</span>
+            <span className="shrink-0 text-sm font-bold text-green-600">₹{p.price}</span>
           </Link>
         </li>
       ))}
@@ -192,8 +192,12 @@ export default function Navbar() {
       >
         <div className="h-px w-full bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent" />
 
-        <div className="container-page flex h-[72px] items-center gap-3 lg:h-[86px] lg:gap-5">
-          {/* ── logo ── */}
+        <div className="container-page flex h-[76px] items-center gap-3 lg:h-[92px] lg:gap-5">
+          {/* ── logo ──
+              FIX: the script font has tall loops and a long descender on the "y".
+              `leading-none` clipped them at the top. Everything here now uses
+              relaxed line-height + a little vertical padding, and the wrapper
+              never clips. */}
           <Link to="/" className="group flex shrink-0 items-center gap-2.5">
             <span className="relative grid shrink-0 place-items-center">
               <span className="absolute inset-0 scale-90 rounded-full bg-brand-pink/25 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
@@ -206,17 +210,25 @@ export default function Navbar() {
               />
             </span>
 
-            <span className="block leading-none">
-              <div className="flex items-center gap-1 whitespace-nowrap font-script text-[25px] sm:text-[22px] lg:hidden">
-                <span className="bg-gradient-to-r from-brand-pink to-brand-magenta bg-clip-text text-transparent">Priyanka&apos;s</span>
-                <span className="bg-gradient-to-r from-brand-magenta to-brand-purple bg-clip-text text-[25px] text-transparent sm:text-[19px]">Creation</span>
-              </div>
-              <span className="hidden whitespace-nowrap bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text font-script text-[26px] text-transparent lg:block 2xl:text-[30px]">
-                Priyanka&apos;s Creation
+            <span className="block overflow-visible">
+              {/* mobile / tablet */}
+              <span className="flex items-baseline gap-1 whitespace-nowrap font-script text-[24px] leading-[1.5] lg:hidden">
+                <span className="bg-gradient-to-r from-brand-pink to-brand-magenta bg-clip-text font-script text-[28px] font-semibold leading-tight text-transparent sm:text-[30px] lg:text-[32px]">
+  Priyanka&apos;s
+</span>
+<span className="bg-gradient-to-r from-brand-magenta to-brand-purple bg-clip-text font-script text-[28px] font-semibold leading-tight text-transparent sm:text-[30px] lg:text-[32px]">
+  Creation
+</span>
               </span>
-              <span className="mt-1 hidden whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.28em] text-brand-gold lg:block 2xl:text-[10px]">
-                Custom Designs &amp; Gifts
-              </span>
+
+              {/* desktop */}
+             <span className="hidden whitespace-nowrap bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text py-0.5 font-script text-[34px] leading-[1.3] text-transparent lg:block 2xl:text-[38px]">
+  Priyanka&apos;s Creation
+</span>
+
+<span className="hidden whitespace-nowrap text-[10px] font-medium uppercase leading-[1.5] tracking-[0.28em] text-brand-gold lg:block 2xl:text-[11px]">
+  Custom Designs &amp; Gifts
+</span>
             </span>
           </Link>
 
@@ -226,16 +238,31 @@ export default function Navbar() {
               label !== "Products" ? (
                 <NavLink key={path} to={path} className={link}>{label}</NavLink>
               ) : (
-                <div key={path} className="relative" onMouseEnter={openMenu} onMouseLeave={closeMenu}>
-                  <NavLink to={path} className={link}>
-                    <span className="inline-flex items-center gap-1">
-                      Products
-                      <ChevronDown size={15} className={`transition-transform duration-300 ${dropdown ? "rotate-180" : ""}`} />
-                    </span>
+                /* FIX: the label and the chevron are now separate controls.
+                   Clicking "Products" always navigates to /products;
+                   the chevron only opens the menu. Hover still opens it. */
+                <div
+                  key={path}
+                  className="relative flex items-center gap-1"
+                  onMouseEnter={openMenu}
+                  onMouseLeave={closeMenu}
+                >
+                  <NavLink to={path} onClick={() => setDropdown(false)} className={link}>
+                    Products
                   </NavLink>
 
+                  <button
+                    type="button"
+                    aria-label="Show product categories"
+                    aria-expanded={dropdown}
+                    onClick={() => setDropdown((v) => !v)}
+                    className="grid h-6 w-6 place-items-center rounded-full text-brand-ink transition-colors hover:text-brand-magenta"
+                  >
+                    <ChevronDown size={15} className={`transition-transform duration-300 ${dropdown ? "rotate-180" : ""}`} />
+                  </button>
+
                   <div
-                    className={`absolute left-1/2 top-full z-50 w-[600px] -translate-x-1/2 pt-4 transition-all duration-200 ${
+                    className={`absolute left-1/2 top-full z-50 w-[600px] -translate-x-1/2 pt-5 transition-all duration-200 ${
                       dropdown ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
                     }`}
                   >
@@ -301,7 +328,6 @@ export default function Navbar() {
 
           {/* ── actions (right) ── */}
           <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1.5 lg:ml-0">
-            {/* search toggle — below lg only */}
             <button
               onClick={() => setSearchOpen((v) => !v)}
               aria-label="Search products"
@@ -344,7 +370,6 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* WhatsApp — compact circle on lg, full pill on 2xl */}
             <a
               href={WA_LINK}
               target="_blank"
@@ -421,10 +446,10 @@ export default function Navbar() {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-pink-100 px-5">
+        <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-pink-100 px-5">
           <div className="flex items-center gap-2.5">
             <img src={LOGO} alt="Priyanka's Creation" className="h-10 w-10 rounded-full ring-1 ring-brand-gold/60" />
-            <span className="whitespace-nowrap bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text font-script text-xl text-transparent">
+            <span className="whitespace-nowrap bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text font-script text-[21px] leading-[1.5] text-transparent">
               Priyanka&apos;s Creation
             </span>
           </div>
@@ -480,33 +505,45 @@ export default function Navbar() {
               Home
             </NavLink>
 
-            <div className="border-b border-pink-50">
-              <button onClick={() => setMobileProducts((v) => !v)} className="flex w-full items-center justify-between py-3.5 text-lg text-brand-ink">
+            {/* Products row: tapping the label opens the page, the chevron opens the list */}
+            <div className="flex items-center justify-between border-b border-pink-50">
+              <NavLink
+                to="/products"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) => `flex-1 py-3.5 text-lg ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}
+              >
                 Products
+              </NavLink>
+              <button
+                onClick={() => setMobileProducts((v) => !v)}
+                aria-label="Show product categories"
+                aria-expanded={mobileProducts}
+                className="grid h-10 w-10 place-items-center rounded-full text-brand-ink"
+              >
                 <ChevronDown size={18} className={`transition-transform duration-300 ${mobileProducts ? "rotate-180" : ""}`} />
               </button>
+            </div>
 
-              <div className={`grid transition-all duration-300 ${mobileProducts ? "grid-rows-[1fr] pb-3" : "grid-rows-[0fr]"}`}>
-                <div className="overflow-hidden">
-                  {groups.map(([category, items]) => (
-                    <div key={category} className="mb-3">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold">{category}</p>
-                      <ul className="mt-1.5 grid">
-                        {items.map((p) => (
-                          <li key={p.id}>
-                            <Link to={`/product/${p.id}`} onClick={() => setOpen(false)} className="flex items-center gap-2.5 py-2 text-[15px] text-brand-ink">
-                              <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70" />
-                              {p.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                  <Link to="/products" onClick={() => setOpen(false)} className="block rounded-full bg-brand-soft py-2.5 text-center text-xs font-semibold text-brand-magenta">
-                    View all products →
-                  </Link>
-                </div>
+            <div className={`grid transition-all duration-300 ${mobileProducts ? "grid-rows-[1fr] pb-3 pt-2" : "grid-rows-[0fr]"}`}>
+              <div className="overflow-hidden">
+                {groups.map(([category, items]) => (
+                  <div key={category} className="mb-3">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold">{category}</p>
+                    <ul className="mt-1.5 grid">
+                      {items.map((p) => (
+                        <li key={p.id}>
+                          <Link to={`/product/${p.id}`} onClick={() => setOpen(false)} className="flex items-center gap-2.5 py-2 text-[15px] text-brand-ink">
+                            <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70" />
+                            {p.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <Link to="/products" onClick={() => setOpen(false)} className="block rounded-full bg-brand-soft py-2.5 text-center text-xs font-semibold text-brand-magenta">
+                  View all products →
+                </Link>
               </div>
             </div>
 

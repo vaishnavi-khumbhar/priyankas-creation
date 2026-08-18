@@ -45,36 +45,44 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-soft via-white to-purple-50">
-      <motion.div {...blob(16)} className="pointer-events-none absolute -top-28 -left-24 w-[420px] h-[420px] rounded-full bg-brand-pink/25 blur-[90px]" />
-      <motion.div {...blob(20)} className="pointer-events-none absolute top-10 -right-32 w-[460px] h-[460px] rounded-full bg-brand-purple/20 blur-[100px]" />
-      <motion.div {...blob(24)} className="pointer-events-none absolute -bottom-32 left-1/3 w-[380px] h-[380px] rounded-full bg-brand-gold/15 blur-[90px]" />
+      <motion.div {...blob(16)} className="pointer-events-none absolute -left-24 -top-28 h-[420px] w-[420px] rounded-full bg-brand-pink/25 blur-[90px]" />
+      <motion.div {...blob(20)} className="pointer-events-none absolute -right-32 top-10 h-[460px] w-[460px] rounded-full bg-brand-purple/20 blur-[100px]" />
+      <motion.div {...blob(24)} className="pointer-events-none absolute -bottom-32 left-1/3 h-[380px] w-[380px] rounded-full bg-brand-gold/15 blur-[90px]" />
 
-      {!reduce && [
-        { l: "12%", t: "22%", d: 5 }, { l: "78%", t: "16%", d: 6.5 }, { l: "62%", t: "72%", d: 5.8 },
-        { l: "28%", t: "78%", d: 7 }, { l: "90%", t: "52%", d: 6 },
-      ].map((s, k) => (
-        <motion.span key={k} className="pointer-events-none absolute w-1.5 h-1.5 rounded-full bg-brand-magenta/50"
-          style={{ left: s.l, top: s.t }}
-          animate={{ y: [0, -18, 0], opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: s.d, repeat: Infinity, ease: "easeInOut", delay: k * 0.4 }} />
-      ))}
+      {!reduce &&
+        [
+          { l: "12%", t: "22%", d: 5 }, { l: "78%", t: "16%", d: 6.5 }, { l: "62%", t: "72%", d: 5.8 },
+          { l: "28%", t: "78%", d: 7 }, { l: "90%", t: "52%", d: 6 },
+        ].map((s, k) => (
+          <motion.span
+            key={k}
+            className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-brand-magenta/50"
+            style={{ left: s.l, top: s.t }}
+            animate={{ y: [0, -18, 0], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: s.d, repeat: Infinity, ease: "easeInOut", delay: k * 0.4 }}
+          />
+        ))}
 
-      <div className="container-page relative grid items-center gap-8 pt-6 pb-16 lg:grid-cols-[1fr_1.2fr] lg:gap-10 lg:pt-10 lg:pb-16">
+      <div className="container-page relative grid items-center gap-8 pb-16 pt-6 lg:grid-cols-[1fr_1.2fr] lg:gap-10 lg:pb-16 lg:pt-10">
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-          <p className="font-script text-3xl sm:text-5xl text-brand-pink">Personalized with love</p>
-          <h1 className="mt-2 font-display text-[40px] sm:text-6xl lg:text-[64px] font-bold leading-[1.03] text-brand-ink">
+          {/* script needs room for its loops and descenders — never leading-none */}
+          <p className="pb-1 font-script text-3xl leading-[1.35] text-brand-pink sm:text-5xl">
+            Personalized with love
+          </p>
+
+          <h1 className="mt-1 font-display text-[40px] font-bold leading-[1.05] text-brand-ink sm:text-6xl lg:text-[64px]">
             Make Every Little Thing{" "}
             <span className="bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text text-transparent">Special.</span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-sm sm:text-base text-brand-muted leading-6 sm:leading-7 font-medium">
+          <p className="mt-5 max-w-xl text-sm font-medium leading-6 text-brand-muted sm:text-base sm:leading-7">
             Customized exam boards, photo frames, and thoughtful creations made specially for your little achievers
             and loved ones.
           </p>
 
           <div className="mt-7 flex w-fit max-w-full gap-2.5 sm:gap-3">
             <Link
-              to="/shop"
+              to="/products"
               className="inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-4 py-3 text-[11px] font-semibold text-white shadow-[0_12px_26px_-12px_rgba(214,36,159,.9)] transition-all duration-300 hover:-translate-y-0.5 sm:px-6 sm:py-3.5 sm:text-sm"
             >
               <span className="whitespace-nowrap">Shop Collection</span>
@@ -109,22 +117,24 @@ export default function Hero() {
 
         {/* ── card ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}
-          onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
           className="relative mx-auto w-full max-w-[440px] sm:max-w-[520px] lg:max-w-[580px]"
         >
-          {/* both badges now sit at the TOP corners — nothing covers the caption below */}
-          <div className="absolute -top-3 -left-2 z-20 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-left-4">
-            <span className="text-brand-gold text-xs leading-none"></span>
+          <div className="absolute -left-2 -top-3 z-20 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-left-4">
+            <span className="text-[13px] leading-none text-brand-gold"></span>
             <p className="text-[12px] font-semibold text-brand-ink sm:text-[15px]">Loved by little achievers</p>
           </div>
 
-          <div className="absolute -top-3 -right-2 z-20 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-right-4">
+          <div className="absolute -right-2 -top-3 z-20 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-right-4">
             <p className="text-[12px] font-semibold text-brand-magenta sm:text-[15px]">100% Waterproof</p>
           </div>
 
-          <div className="relative rounded-[36px] bg-white p-3 pt-5 sm:p-4 sm:pt-6 shadow-[0_30px_80px_rgba(80,20,80,.16)] rotate-1">
-            <div className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-[28px] bg-gradient-to-br from-pink-50 via-white to-purple-50 ring-1 ring-brand-gold/30 p-2 sm:p-3">
+          <div className="relative rotate-1 rounded-[36px] bg-white p-3 pt-5 shadow-[0_30px_80px_rgba(80,20,80,.16)] sm:p-4 sm:pt-6">
+            <div className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-[28px] bg-gradient-to-br from-pink-50 via-white to-purple-50 p-2 ring-1 ring-brand-gold/30 sm:p-3">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={i}
@@ -141,17 +151,25 @@ export default function Hero() {
             </div>
 
             <div className="px-2 pt-3 text-center">
-              <p className="font-script text-3xl leading-none bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text text-transparent">
+              {/* FIX: was leading-none — the script "M" and "y" were being clipped */}
+              <p className="bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text pb-0.5 font-script text-3xl leading-[1.45] text-transparent">
                 {slides[i].title}
               </p>
-<p className="mt-1 text-[13px] sm:text-[14px] lg:text-[15px] text-brand-muted leading-5">
-  {slides[i].note}
-</p>            </div>
+              <p className="text-[13px] leading-5 text-brand-muted sm:text-[14px] lg:text-[15px]">
+                {slides[i].note}
+              </p>
+            </div>
 
-            <div className="flex justify-center gap-2 pt-3 pb-1">
+            <div className="flex justify-center gap-2 pb-1 pt-3">
               {slides.map((_, k) => (
-                <button key={k} onClick={() => setI(k)} aria-label={`Show image ${k + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${k === i ? "w-6 bg-gradient-to-r from-brand-pink to-brand-purple" : "w-1.5 bg-pink-200"}`} />
+                <button
+                  key={k}
+                  onClick={() => setI(k)}
+                  aria-label={`Show image ${k + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    k === i ? "w-6 bg-gradient-to-r from-brand-pink to-brand-purple" : "w-1.5 bg-pink-200"
+                  }`}
+                />
               ))}
             </div>
           </div>
