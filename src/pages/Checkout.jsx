@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Truck, Store, Banknote, QrCode, CreditCard, Landmark, Wallet, MapPin, Lock,
-  Check, AlertCircle, ArrowLeft, ShieldCheck,
+  Check, AlertCircle, ArrowLeft, ShieldCheck, Plus, X,
 } from "lucide-react";
 import { useShop } from "../context/ShopContext";
 import { useAuth } from "../context/AuthContext";
@@ -37,16 +37,25 @@ const Tick = () => (
   </span>
 );
 
+const emptyAddress = {
+  id: null, label: "Home", name: "", phone: "", line: "", line2: "",
+  city: "Pune", state: "Maharashtra", pin: "",
+};
+
+const input =
+  "h-11 w-full rounded-xl border border-pink-200 bg-white px-3.5 text-sm text-brand-ink outline-none transition-all placeholder:text-brand-muted/70 focus:border-brand-pink/60 focus:ring-2 focus:ring-brand-pink/15";
+
 export default function Checkout() {
   const navigate = useNavigate();
   const { cartItems, cartCount, cartTotal, clearCart } = useShop();
-  const { user, isAuthed, addOrder } = useAuth();
+  const { user, isAuthed, addOrder, saveAddress } = useAuth();
 
   const [deliveryMethod, setDeliveryMethod] = useState("delivery");
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [addressId, setAddressId] = useState(user?.addresses?.[0]?.id || null);
+  const [form, setForm] = useState(null);        // inline "add address"
   const [placing, setPlacing] = useState(false);
-  const [placed, setPlaced] = useState(false);   // stops the empty-cart redirect after ordering
+  const [placed, setPlaced] = useState(false);
   const [error, setError] = useState("");
 
   const addresses = user?.addresses || [];
@@ -59,10 +68,15 @@ export default function Checkout() {
 
   useEffect(() => {
     /* clearCart() empties the cart a moment before we navigate to the
-       success page — without the `placed` guard this effect fired first
-       and bounced the customer to the empty cart screen. */
+       success page — the `placed` guard stops this bouncing the customer
+       to the empty-cart screen. */
     if (!cartCount && !placed) navigate("/cart", { replace: true });
   }, [cartCount, placed, navigate]);
+
+  /* keep the newest saved address selected */
+  useEffect(() => {
+    if (!addressId && addresses.length) setAddressId(addresses[addresses.length - 1].id);
+  }, [addresses, addressId]);
 
   const deliveryCharge = deliveryMethod === "delivery" ? DELIVERY_CHARGE : 0;
   const baseTotal = cartTotal + deliveryCharge;
@@ -73,7 +87,17 @@ export default function Checkout() {
     ? `${address.name}, ${address.line}${address.line2 ? `, ${address.line2}` : ""}, ${address.city}, ${address.state} – ${address.pin} · ${address.phone}`
     : "Store pickup — Pune";
 
-  /* ── create the order, notify on WhatsApp, go to the success page ── */
+  const submitAddress = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.line || !form.city || !form.pin || !form.phone) {
+      return setError("Please fill name, phone, address, city and PIN.");
+    }
+    saveAddress(form);
+    setForm(null);
+    setAddressId(null);      // the effect above picks the new one
+    setError("");
+  };
+
   const finishOrder = (payment) => {
     const created = addOrder({
       items: cartItems.map((x) => ({
@@ -89,6 +113,7 @@ export default function Checkout() {
       payment,                    // "cod" | "online"
       deliveryMethod,             // "delivery" | "pickup"
       address: addressText,
+      customerPhone: user.phone,
     });
 
     if (!created) {
@@ -98,10 +123,6 @@ export default function Checkout() {
 
     setPlaced(true);
     clearCart();
-
-    /* NOTE: WhatsApp is NOT opened automatically here — that stole focus and
-       hid the confirmation page. The success page has a WhatsApp button
-       the customer taps themselves. */
     navigate(`/order-success/${created.orderNo}`);
   };
 
@@ -109,7 +130,7 @@ export default function Checkout() {
     setError("");
 
     if (deliveryMethod === "delivery" && !address) {
-      return setError("Please select a delivery address, or choose store pickup.");
+      return setError("Please add or select a delivery address, or choose store pickup.");
     }
 
     if (paymentMethod === "cod") return finishOrder("cod");
@@ -133,7 +154,7 @@ export default function Checkout() {
       currency: "INR",
       name: "Priyanka's Creation",
       description: `${cartCount} item(s)`,
-      prefill: { name: user?.name, email: user?.email, contact: user?.phone },
+      prefill: { name: user?.name || "", email: user?.email || "", contact: user?.phone || "" },
       theme: { color: "#D6249F" },
       handler: () => finishOrder("online"),
       modal: { ondismiss: () => setPlacing(false) },
@@ -160,9 +181,10 @@ export default function Checkout() {
         >
           <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-gold">Almost there</p>
           <h1 className="mt-1 font-display text-4xl font-bold text-brand-ink sm:text-5xl">Checkout</h1>
+          <p className="mt-2 text-[13px] text-brand-muted">Ordering as +91 {user.phone}</p>
 
           {/* ── delivery method ── */}
-          <div className="mt-8">
+          <div className="mt-7">
             <p className="font-display text-lg font-bold text-brand-ink">How would you like it?</p>
             <div className="mt-3 grid grid-cols-2 gap-3">
               {[
@@ -188,11 +210,21 @@ export default function Checkout() {
           {/* ── address ── */}
           {deliveryMethod === "delivery" && (
             <div className="mt-7">
-              <p className="flex items-center gap-2 font-display text-lg font-bold text-brand-ink">
-                <MapPin size={17} className="text-brand-magenta" /> Deliver to
-              </p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="flex items-center gap-2 font-display text-lg font-bold text-brand-ink">
+                  <MapPin size={17} className="text-brand-magenta" /> Deliver to
+                </p>
+                {!form && (
+                  <button
+                    onClick={() => setForm({ ...emptyAddress, name: user.name || "", phone: user.phone || "" })}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-magenta hover:underline"
+                  >
+                    <Plus size={13} /> Add new
+                  </button>
+                )}
+              </div>
 
-              {addresses.length ? (
+              {!form && addresses.length ? (
                 <div className="mt-3 grid gap-2.5">
                   {addresses.map((a) => (
                     <button
@@ -214,11 +246,34 @@ export default function Checkout() {
                     </button>
                   ))}
                 </div>
-              ) : (
+              ) : null}
+
+              {/* inline address form — no need to leave checkout */}
+              {form && (
+                <form onSubmit={submitAddress} className="mt-3 grid gap-3 rounded-2xl border border-pink-100 bg-brand-soft/30 p-4 sm:grid-cols-2">
+                  <input className={input} placeholder="Full name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                  <input className={input} placeholder="Mobile number *" inputMode="numeric" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                  <input className={`${input} sm:col-span-2`} placeholder="Flat / building / street *" value={form.line} onChange={(e) => setForm({ ...form, line: e.target.value })} />
+                  <input className={`${input} sm:col-span-2`} placeholder="Colony / locality (optional)" value={form.line2} onChange={(e) => setForm({ ...form, line2: e.target.value })} />
+                  <input className={input} placeholder="City *" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} />
+                  <input className={input} placeholder="PIN code *" inputMode="numeric" value={form.pin} onChange={(e) => setForm({ ...form, pin: e.target.value })} />
+                  <input className={input} placeholder="State" value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} />
+                  <input className={input} placeholder="Label (Home / Work)" value={form.label} onChange={(e) => setForm({ ...form, label: e.target.value })} />
+
+                  <div className="flex gap-2 sm:col-span-2">
+                    <button type="submit" className="h-11 flex-[2] rounded-full bg-gradient-to-r from-brand-pink to-brand-purple text-sm font-semibold text-white">
+                      Save &amp; deliver here
+                    </button>
+                    <button type="button" onClick={() => setForm(null)} className="grid h-11 w-11 place-items-center rounded-full border border-pink-200 text-brand-muted">
+                      <X size={16} />
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {!form && !addresses.length && (
                 <p className="mt-3 rounded-2xl border border-dashed border-pink-200 bg-brand-soft/40 p-5 text-center text-[14px] text-brand-muted">
-                  No saved address yet.{" "}
-                  <Link to="/profile" className="font-semibold text-brand-magenta hover:underline">Add one from your profile</Link>
-                  {" "}or choose store pickup.
+                  No saved address yet. Tap <b className="text-brand-magenta">+ Add new</b> above, or choose store pickup.
                 </p>
               )}
             </div>
@@ -344,8 +399,9 @@ export default function Checkout() {
 
           <p className="mt-4 flex gap-2 text-[13px] leading-6 text-brand-muted">
             <ShieldCheck size={15} className="mt-0.5 shrink-0 text-brand-magenta" />
-            After you place the order we&apos;ll message you on WhatsApp for your child&apos;s name, photo and theme,
-            then share the design for approval before making it.
+            After you place the order, share your Order ID on WhatsApp — or we&apos;ll message you on
+            +91 {user.phone} to collect your child&apos;s name, photo and theme, then share the design for
+            approval before making it.
           </p>
         </motion.div>
       </div>

@@ -1,10 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { sendOtp as providerSendOtp, verifyOtp as providerVerifyOtp } from "../lib/otp";
 
-/* ──────────────────────────────────────────────────────────────
-   DEMO AUTH — accounts live in this browser (localStorage).
-   Fine for building/testing. Swap for Firebase or Supabase before
-   launch; only signup / login / logout / changePassword change.
-   ────────────────────────────────────────────────────────────── */
+/*  Phone + OTP auth.
+    Accounts are keyed by mobile number. Profile details, addresses and
+    orders stay exactly as before — only the way people sign in changed. */
 
 const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
@@ -21,10 +20,9 @@ const load = (k, f) => {
   }
 };
 
-const scramble = (s) => btoa(unescape(encodeURIComponent(`pc::${s}`)));
 const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+const clean = (p) => String(p || "").replace(/\D/g, "").slice(-10);
 
-/* PC + ddmmyy + 4 digits → PC1808262650 */
 const makeOrderNumber = () => {
   const d = new Date();
   const p = (n) => String(n).padStart(2, "0");
@@ -47,53 +45,44 @@ export function AuthProvider({ children }) {
     [sessionId]
   );
 
-  /* ── auth ── */
-  const signup = useCallback(
-    ({ name, email, phone, password }) => {
-      const clean = email.trim().toLowerCase();
-      if (users.some((u) => u.email === clean)) return { ok: false, error: "An account with this email already exists." };
+  /* ── OTP login ── */
+  const sendOtp = useCallback(async (phone) => {
+    const p = clean(phone);
+    if (p.length !== 10) return { ok: false, error: "Please enter a valid 10-digit mobile number." };
+    return providerSendOtp(p);
+  }, []);
+
+  const verifyOtp = useCallback(
+    async (phone, code) => {
+      const p = clean(phone);
+      const res = await providerVerifyOtp(p, code);
+      if (!res.ok) return res;
+
+      /* existing account → sign in · new number → create account */
+      const existing = users.find((u) => u.phone === p);
+      if (existing) {
+        setSessionId(existing.id);
+        return { ok: true, isNew: false };
+      }
 
       const newUser = {
         id: uid(),
-        name: name.trim(),
-        email: clean,
-        phone: phone.trim(),
-        pass: scramble(password),
+        phone: p,
+        name: "",
+        email: "",
         joined: new Date().toISOString(),
         addresses: [],
         orders: [],
       };
       setUsers((prev) => [...prev, newUser]);
       setSessionId(newUser.id);
-      return { ok: true };
-    },
-    [users]
-  );
-
-  const login = useCallback(
-    ({ email, password }) => {
-      const clean = email.trim().toLowerCase();
-      const found = users.find((u) => u.email === clean);
-      if (!found) return { ok: false, error: "No account found with this email." };
-      if (found.pass !== scramble(password)) return { ok: false, error: "Incorrect password. Please try again." };
-      setSessionId(found.id);
-      return { ok: true };
+      return { ok: true, isNew: true };
     },
     [users]
   );
 
   const logout = useCallback(() => setSessionId(null), []);
   const updateProfile = useCallback((patch) => patchUser(patch), [patchUser]);
-
-  const changePassword = useCallback(
-    (current, next) => {
-      if (!user) return { ok: false, error: "Not signed in." };
-      if (user.pass !== scramble(current)) return { ok: false, error: "Current password is incorrect." };
-      patchUser({ pass: scramble(next) });
-      return { ok: true };
-    },
-    [user, patchUser]
-  );
 
   /* ── addresses ── */
   const saveAddress = useCallback(
@@ -122,7 +111,7 @@ export function AuthProvider({ children }) {
         orderNo: makeOrderNumber(),
         date: new Date().toISOString(),
         status: "Confirmed",
-        statusIndex: 1,           // 0 Placed · 1 Confirmed · 2 Processing · 3 Out for delivery · 4 Delivered
+        statusIndex: 1,
         cancelled: false,
         ...order,
       };
@@ -148,7 +137,6 @@ export function AuthProvider({ children }) {
     [user, patchUser]
   );
 
-  /* for you to move an order forward while testing */
   const advanceOrder = useCallback(
     (orderNo) =>
       user &&
@@ -165,8 +153,8 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     isAuthed: !!user,
-    signup, login, logout,
-    updateProfile, changePassword,
+    sendOtp, verifyOtp, logout,
+    updateProfile,
     saveAddress, removeAddress,
     addOrder, getOrder, cancelOrder, advanceOrder,
   };

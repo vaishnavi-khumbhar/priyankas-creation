@@ -8,6 +8,9 @@ import { useShop } from "../context/ShopContext";
 import { useAuth } from "../context/AuthContext";
 import LoginModal from "../components/LoginModal";
 
+const WA = "919130059818";
+const PHONE_DISPLAY = "+91 9130059818";
+
 /* ── your coupon codes — edit freely ── */
 const COUPONS = {
   FIRST10: { type: "percent", value: 10, label: "10% off your first order" },
@@ -24,7 +27,7 @@ const input =
   "h-11 w-full rounded-xl border border-pink-200 bg-white px-3.5 text-sm text-brand-ink outline-none transition-all placeholder:text-brand-muted/70 focus:border-brand-pink/60 focus:ring-2 focus:ring-brand-pink/15";
 
 export default function Cart() {
-  const { cartItems, cartCount, cartTotal, cartSavings, updateQty, removeFromCart, clearCart } = useShop();
+  const { cartItems, cartCount, cartTotal, updateQty, removeFromCart, clearCart } = useShop();
   const { user, isAuthed, saveAddress } = useAuth();
   const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ export default function Cart() {
   const [coupon, setCoupon] = useState(null);
   const [couponMsg, setCouponMsg] = useState("");
   const [selected, setSelected] = useState(user?.addresses?.[0]?.id || null);
-  const [form, setForm] = useState(null);              // new / edit address
+  const [form, setForm] = useState(null);
   const [guestAddress, setGuestAddress] = useState(null);
   const [notes, setNotes] = useState("");
   const [showNotes, setShowNotes] = useState(false);
@@ -77,29 +80,6 @@ export default function Cart() {
     }
   };
 
-  const addressText = chosen
-    ? `${chosen.name}, ${chosen.line}${chosen.line2 ? `, ${chosen.line2}` : ""}, ${chosen.city}, ${chosen.state} – ${chosen.pin}${chosen.landmark ? ` (near ${chosen.landmark})` : ""} · ${chosen.phone}`
-    : "";
-
-
-  /* ── Pay Now ──────────────────────────────────────────────
-     No payment gateway is connected yet, so this validates the
-     order and hands it to WhatsApp for confirmation.
-
-     To take real payments, sign up for Razorpay, add the checkout
-     script to index.html, and replace the body of this function:
-
-       const rzp = new window.Razorpay({
-         key: "rzp_live_xxxxxxxx",
-         amount: grandTotal * 100,          // paise
-         currency: "INR",
-         name: "Priyanka's Creation",
-         description: `${cartCount} item(s)`,
-         prefill: { name: chosen?.name, contact: chosen?.phone, email: chosen?.email },
-         handler: (res) => { clearCart(); navigate("/order-success"); },
-       });
-       rzp.open();
-     ───────────────────────────────────────────────────────── */
   const proceedToPay = () => {
     if (mode === "deliver" && !chosen) {
       setPayError("Please add a delivery address before placing your order.");
@@ -145,7 +125,7 @@ export default function Cart() {
         {/* ── header ── */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-script text-2xl text-brand-pink">Almost yours</p>
+            <p className="pb-0.5 font-script text-2xl leading-[1.45] text-brand-pink">Almost yours</p>
             <h1 className="font-display text-3xl font-bold text-brand-ink sm:text-4xl">Cart</h1>
           </div>
 
@@ -238,7 +218,6 @@ export default function Cart() {
                   )}
                 </div>
 
-                {/* saved addresses */}
                 {!form && (addresses.length || guestAddress) ? (
                   <div className="mt-4 grid gap-3">
                     {[...addresses, ...(guestAddress ? [guestAddress] : [])].map((a) => (
@@ -246,7 +225,7 @@ export default function Cart() {
                         key={a.id}
                         onClick={() => setSelected(a.id)}
                         className={`rounded-[18px] border-2 p-4 text-left transition-all ${
-                          (chosen?.id === a.id) ? "border-brand-magenta bg-brand-soft/30" : "border-pink-100 hover:border-brand-pink/40"
+                          chosen?.id === a.id ? "border-brand-magenta bg-brand-soft/30" : "border-pink-100 hover:border-brand-pink/40"
                         }`}
                       >
                         <span className="flex items-center gap-2.5">
@@ -267,7 +246,6 @@ export default function Cart() {
                   </div>
                 ) : null}
 
-                {/* address form */}
                 {form && (
                   <form onSubmit={submitAddress} className="mt-4 grid gap-3 sm:grid-cols-2">
                     <input className={`${input} sm:col-span-2`} placeholder="Recipient name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -345,7 +323,7 @@ export default function Cart() {
                 />
               ) : (
                 <p className="mt-2 text-[14px] leading-6 text-brand-muted">
-                  Tell us the name, theme and any special request — it goes straight into your WhatsApp message.
+                  Tell us the name, theme and any special request — it goes straight into your order.
                 </p>
               )}
             </div>
@@ -422,7 +400,7 @@ export default function Cart() {
 
             <button
               onClick={handlePayNow}
-              className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple py-3.5 text-base font-bold text-white shadow-[0_14px_30px_-14px_rgba(214,36,159,.95)] transition-transform hover:-translate-y-0.5"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple py-3.5 text-base font-bold text-white shadow-[0_14px_30px_-14px_rgba(214,36,159,.95)] transition-transform hover:-translate-y-0.5"
             >
               Pay Now
             </button>
@@ -439,10 +417,7 @@ export default function Cart() {
               <span className="flex items-center gap-1"><BadgeCheck size={13} /> Verified merchant</span>
             </div>
 
-            <p className="mt-4 flex gap-2 border-t border-pink-100 pt-4 text-[13px] leading-6 text-brand-muted">
-              <ShieldCheck size={14} className="mt-0.5 shrink-0 text-brand-magenta" />
-              We confirm your child&apos;s name, photo and theme on WhatsApp, then share the design for approval before making it.
-            </p>
+           
           </aside>
         </div>
       </div>

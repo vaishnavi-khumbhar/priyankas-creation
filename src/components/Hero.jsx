@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 
-/* Add files in src/assets/ → any shape works (they are fitted, not cropped) */
+/* src/assets/ — any shape works, nothing is cropped */
 import hero1 from "../assets/hero1.jpg";
 import hero2 from "../assets/hero2.jpg";
 import hero3 from "../assets/hero3.jpg";
@@ -63,9 +63,8 @@ export default function Hero() {
           />
         ))}
 
-      <div className="container-page relative grid items-center gap-8 pb-16 pt-6 lg:grid-cols-[1fr_1.2fr] lg:gap-10 lg:pb-16 lg:pt-10">
+      <div className="container-page relative grid items-center gap-8 pb-16 pt-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10 lg:pb-16 lg:pt-10">
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-          {/* script needs room for its loops and descenders — never leading-none */}
           <p className="pb-1 font-script text-3xl leading-[1.35] text-brand-pink sm:text-5xl">
             Personalized with love
           </p>
@@ -122,36 +121,39 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative mx-auto w-full max-w-[440px] sm:max-w-[520px] lg:max-w-[580px]"
+          className="relative mx-auto w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[520px]"
         >
-          <div className="absolute -left-2 -top-3 z-20 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-left-4">
-            <span className="text-[13px] leading-none text-brand-gold"></span>
-            <p className="text-[12px] font-semibold text-brand-ink sm:text-[15px]">Loved by little achievers</p>
+          {/* badges kept inside the card edge so they never sit off-screen */}
+          <div className="absolute left-2 top-2 z-20 flex items-center gap-2 rounded-2xl bg-white/95 px-3 py-1.5 shadow-lg backdrop-blur sm:left-3 sm:top-3 sm:px-3.5 sm:py-2">
+            <span className="text-[12px] leading-none text-brand-gold"></span>
+            <p className="text-[11px] font-semibold text-brand-ink sm:text-[13px]">Loved by little achievers</p>
           </div>
 
-          <div className="absolute -right-2 -top-3 z-20 rounded-2xl bg-white px-3.5 py-2 shadow-xl sm:-right-4">
-            <p className="text-[12px] font-semibold text-brand-magenta sm:text-[15px]">100% Waterproof</p>
+          <div className="absolute right-2 top-2 z-20 rounded-2xl bg-white/95 px-3 py-1.5 shadow-lg backdrop-blur sm:right-3 sm:top-3 sm:px-3.5 sm:py-2">
+            <p className="text-[11px] font-semibold text-brand-magenta sm:text-[13px]">100% Waterproof</p>
           </div>
 
-          <div className="relative rotate-1 rounded-[36px] bg-white p-3 pt-5 shadow-[0_30px_80px_rgba(80,20,80,.16)] sm:p-4 sm:pt-6">
-            <div className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-[28px] bg-gradient-to-br from-pink-50 via-white to-purple-50 p-2 ring-1 ring-brand-gold/30 sm:p-3">
+          <div className="relative rotate-1 rounded-[32px] bg-white p-3 shadow-[0_30px_80px_rgba(80,20,80,.16)] sm:p-4">
+            {/* FIX: no fixed aspect ratio any more.
+                The box grows to the image's own shape (capped by max-h),
+                so portrait, square and landscape photos all show in full. */}
+            <div className="flex min-h-[240px] items-center justify-center overflow-hidden rounded-[24px] bg-gradient-to-br from-pink-50 via-white to-purple-50 p-2 ring-1 ring-brand-gold/30 sm:min-h-[280px] sm:p-3">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={i}
                   src={slides[i].src}
                   alt={`${slides[i].title} — customized exam board by Priyanka's Creation`}
                   loading={i === 0 ? "eager" : "lazy"}
-                  initial={{ opacity: 0, scale: 1.04 }}
+                  initial={{ opacity: 0, scale: 1.03 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.99 }}
-                  transition={{ duration: 0.7, ease: "easeOut" }}
-                  className="max-h-full max-w-full rounded-[18px] object-contain shadow-[0_10px_30px_-14px_rgba(80,20,80,.45)]"
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="h-auto max-h-[300px] w-auto max-w-full rounded-[16px] object-contain shadow-[0_10px_30px_-14px_rgba(80,20,80,.45)] sm:max-h-[360px] lg:max-h-[400px]"
                 />
               </AnimatePresence>
             </div>
 
             <div className="px-2 pt-3 text-center">
-              {/* FIX: was leading-none — the script "M" and "y" were being clipped */}
               <p className="bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text pb-0.5 font-script text-3xl leading-[1.45] text-transparent">
                 {slides[i].title}
               </p>

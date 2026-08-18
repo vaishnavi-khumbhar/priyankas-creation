@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Package, MapPin, Heart, Settings, LogOut, ChevronRight, Pencil, Plus, Trash2,
-  ShoppingCart, Check, X,
+  ShoppingCart, Check, X, Phone,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useShop } from "../context/ShopContext";
@@ -28,7 +28,7 @@ const emptyAddress = {
 
 export default function Profile() {
   const {
-    user, isAuthed, logout, updateProfile, changePassword,
+    user, isAuthed, logout, updateProfile,
     saveAddress, removeAddress, cancelOrder,
   } = useAuth();
   const { wishlistItems, moveToCart, toggleWishlist } = useShop();
@@ -37,7 +37,6 @@ export default function Profile() {
   const [tab, setTab] = useState("orders");
   const [addr, setAddr] = useState(null);
   const [profileForm, setProfileForm] = useState(null);
-  const [pwd, setPwd] = useState({ current: "", next: "" });
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -46,23 +45,18 @@ export default function Profile() {
 
   if (!user) return null;
 
+  /* OTP accounts start with no name — fall back to the number */
+  const displayName = user.name?.trim() || `+91 ${user.phone}`;
+
   const flash = (m) => { setMsg(m); setTimeout(() => setMsg(""), 2200); };
 
   const saveProfile = () => {
     updateProfile({
       name: profileForm.name.trim(),
       email: profileForm.email.trim().toLowerCase(),
-      phone: profileForm.phone.trim(),
     });
     setProfileForm(null);
     flash("Profile updated");
-  };
-
-  const submitPassword = () => {
-    if (pwd.next.length < 6) return flash("New password must be at least 6 characters");
-    const res = changePassword(pwd.current, pwd.next);
-    flash(res.ok ? "Password changed" : res.error);
-    if (res.ok) setPwd({ current: "", next: "" });
   };
 
   const submitAddress = (e) => {
@@ -93,22 +87,38 @@ export default function Profile() {
 
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="font-display text-2xl font-bold sm:text-3xl">{user.name}</h1>
+                <h1 className="font-display text-2xl font-bold sm:text-3xl">{displayName}</h1>
                 <span className="rounded-full bg-brand-gold px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-white">
                   Member
                 </span>
               </div>
-              <p className="mt-1 break-all text-sm text-white/80">{user.phone} · {user.email}</p>
+              <p className="mt-1 flex flex-wrap items-center gap-x-2 break-all text-sm text-white/80">
+                <span className="inline-flex items-center gap-1.5"><Phone size={13} /> +91 {user.phone}</span>
+                {user.email ? <span>· {user.email}</span> : null}
+              </p>
             </div>
 
             <button
-              onClick={() => { setTab("settings"); setProfileForm({ name: user.name, email: user.email, phone: user.phone }); }}
+              onClick={() => { setTab("settings"); setProfileForm({ name: user.name || "", email: user.email || "" }); }}
               className="ml-auto inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-semibold ring-1 ring-white/30 transition-colors hover:bg-white/25"
             >
               <Pencil size={15} /> Edit Profile
             </button>
           </div>
         </motion.div>
+
+        {/* first-time nudge: OTP users have no name yet */}
+        {!user.name?.trim() && (
+          <p className="mt-4 rounded-2xl border border-pink-100 bg-white px-4 py-3 text-[13px] text-brand-muted">
+            Add your name so we can personalise your orders —{" "}
+            <button
+              onClick={() => { setTab("settings"); setProfileForm({ name: "", email: user.email || "" }); }}
+              className="font-semibold text-brand-magenta hover:underline"
+            >
+              complete your profile
+            </button>
+          </p>
+        )}
 
         {msg && (
           <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-50 px-4 py-2 text-xs font-semibold text-green-700">
@@ -233,7 +243,10 @@ export default function Profile() {
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-display text-xl font-bold text-brand-ink">Saved Addresses</h2>
                   {!addr && (
-                    <button onClick={() => setAddr(emptyAddress)} className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-4 py-2 text-xs font-semibold text-brand-magenta">
+                    <button
+                      onClick={() => setAddr({ ...emptyAddress, name: user.name || "", phone: user.phone || "" })}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-4 py-2 text-xs font-semibold text-brand-magenta"
+                    >
                       <Plus size={14} /> Add new
                     </button>
                   )}
@@ -346,7 +359,7 @@ export default function Profile() {
                     <p className="text-sm font-semibold text-brand-ink">Profile details</p>
                     {!profileForm && (
                       <button
-                        onClick={() => setProfileForm({ name: user.name, email: user.email, phone: user.phone })}
+                        onClick={() => setProfileForm({ name: user.name || "", email: user.email || "" })}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-magenta"
                       >
                         <Pencil size={13} /> Edit
@@ -357,8 +370,7 @@ export default function Profile() {
                   {profileForm ? (
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       <input className={input} value={profileForm.name} onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} placeholder="Full name" />
-                      <input className={input} value={profileForm.phone} onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })} placeholder="Phone" inputMode="numeric" />
-                      <input className={`${input} sm:col-span-2`} value={profileForm.email} onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })} placeholder="Email" type="email" />
+                      <input className={`${input} sm:col-span-2`} value={profileForm.email} onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })} placeholder="Email (optional)" type="email" />
                       <div className="flex gap-2 sm:col-span-2">
                         <button onClick={saveProfile} className="h-11 flex-1 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple text-sm font-semibold text-white">
                           Save changes
@@ -370,22 +382,22 @@ export default function Profile() {
                     </div>
                   ) : (
                     <dl className="mt-3 grid gap-2 text-sm">
-                      <div className="flex justify-between gap-4"><dt className="text-brand-muted">Name</dt><dd className="text-brand-ink">{user.name}</dd></div>
-                      <div className="flex justify-between gap-4"><dt className="text-brand-muted">Phone</dt><dd className="text-brand-ink">{user.phone}</dd></div>
-                      <div className="flex justify-between gap-4"><dt className="text-brand-muted">Email</dt><dd className="break-all text-brand-ink">{user.email}</dd></div>
+                      <div className="flex justify-between gap-4"><dt className="text-brand-muted">Name</dt><dd className="text-brand-ink">{user.name || "—"}</dd></div>
+                      <div className="flex justify-between gap-4"><dt className="text-brand-muted">Email</dt><dd className="break-all text-brand-ink">{user.email || "—"}</dd></div>
                     </dl>
                   )}
                 </div>
 
+                {/* mobile number — the login identity, so it can't be edited here */}
                 <div className="mt-4 rounded-2xl border border-pink-100 p-4">
-                  <p className="text-sm font-semibold text-brand-ink">Change password</p>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <input className={input} type="password" placeholder="Current password" value={pwd.current} onChange={(e) => setPwd({ ...pwd, current: e.target.value })} />
-                    <input className={input} type="password" placeholder="New password" value={pwd.next} onChange={(e) => setPwd({ ...pwd, next: e.target.value })} />
-                    <button onClick={submitPassword} className="h-11 rounded-full bg-brand-soft text-sm font-semibold text-brand-magenta sm:col-span-2">
-                      Update password
-                    </button>
-                  </div>
+                  <p className="text-sm font-semibold text-brand-ink">Mobile number</p>
+                  <p className="mt-2 flex items-center gap-2 text-[15px] font-semibold text-brand-ink">
+                    <Phone size={15} className="text-brand-magenta" /> +91 {user.phone}
+                  </p>
+                  <p className="mt-2 text-[12px] leading-5 text-brand-muted">
+                    This is the number you log in with, so it can&apos;t be changed here. To use a different number,
+                    log out and sign in with that number — or message us on WhatsApp and we&apos;ll move your orders across.
+                  </p>
                 </div>
               </>
             )}

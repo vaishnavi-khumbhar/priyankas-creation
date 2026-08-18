@@ -15,14 +15,14 @@ export const useCart = () => useContext(ShopContext);   // alias
 export const cartKey = (item) => `${item.id}::${item.size || "default"}`;
 
 export function ShopProvider({ children }) {
-  const [cart, setCart] = useAccountStorage("pc_cart", []);          // [{ id, qty, size }]
+  const [cart, setCart] = useAccountStorage("pc_cart", []);            // [{ id, qty, size }]
   const [wishlist, setWishlist] = useAccountStorage("pc_wishlist", []); // [id]
   const [toast, setToast] = useState(null);
 
   const notify = useCallback((message, icon = "cart") => {
     const at = Date.now();
     setToast({ message, icon, at });
-    setTimeout(() => setToast((t) => (t && t.at === at ? null : t)), 2000);
+    setTimeout(() => setToast((t) => (t && t.at === at ? null : t)), 2200);
   }, []);
 
   /* ── cart ── */
@@ -42,7 +42,7 @@ export function ShopProvider({ children }) {
         return [...prev, { id: product.id, qty: qtyToAdd, size: chosenSize }];
       });
 
-      notify(`${product.name} added to cart`);
+      notify("Added to cart");
     },
     [setCart, notify]
   );
@@ -89,7 +89,7 @@ export function ShopProvider({ children }) {
     (product) => {
       setWishlist((prev) => {
         const has = prev.includes(product.id);
-        notify(has ? "Removed from wishlist" : `${product.name} saved to wishlist`, "heart");
+        notify(has ? "Removed from wishlist" : "Saved to wishlist", "heart");
         return has ? prev.filter((x) => x !== product.id) : [...prev, product.id];
       });
     },
@@ -148,6 +148,11 @@ export function ShopProvider({ children }) {
     <ShopContext.Provider value={value}>
       {children}
 
+      {/* ── toast ──
+          Was a fixed-width pill with `truncate`, sitting at the same height
+          as the floating WhatsApp button — so the text got cut and the
+          button overlapped it. Now: centred wrapper, wraps to two lines,
+          and clears the WhatsApp button on mobile. */}
       <AnimatePresence>
         {toast && (
           <motion.div
@@ -155,12 +160,18 @@ export function ShopProvider({ children }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-24 left-1/2 z-[120] flex max-w-[90vw] -translate-x-1/2 items-center gap-2.5 rounded-full bg-brand-ink px-5 py-3 text-sm font-medium text-white shadow-2xl md:bottom-8"
+            className="pointer-events-none fixed inset-x-4 bottom-28 z-[130] flex justify-center sm:inset-x-0 sm:bottom-8"
           >
-            <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full ${toast.icon === "heart" ? "bg-brand-pink" : "bg-green-600"}`}>
-              {toast.icon === "heart" ? <Heart size={13} className="fill-white" /> : <Check size={14} />}
+            <span className="pointer-events-auto flex max-w-[26rem] items-start gap-2.5 rounded-2xl bg-brand-ink px-4 py-3 text-sm font-medium text-white shadow-2xl">
+              <span
+                className={`mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full ${
+                  toast.icon === "heart" ? "bg-brand-pink" : "bg-green-600"
+                }`}
+              >
+                {toast.icon === "heart" ? <Heart size={13} className="fill-white" /> : <Check size={14} />}
+              </span>
+              <span className="leading-5">{toast.message}</span>
             </span>
-            <span className="truncate">{toast.message}</span>
           </motion.div>
         )}
       </AnimatePresence>
