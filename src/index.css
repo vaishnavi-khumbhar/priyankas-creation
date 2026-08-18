@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Poppins", sans-serif; background:#FFFDF8; color:#30243A; }
+button, input { font-family: inherit; }
+::selection { background:#E91E9B; color:white; }
+
+.container-page { width:min(1180px, calc(100% - 32px)); margin-inline:auto; }
+
+
+
+.brand-word {
+  font-family: "Great Vibes", "Segoe Script", cursive;
+  color: #D6249F;
+  white-space: nowrap;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .brand-word {
+    background-image: linear-gradient(90deg, #FF4FA3 0%, #D6249F 55%, #7A1FA2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
