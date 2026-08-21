@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Instagram, Facebook, Mail, Phone, Clock, MapPin, Heart } from "lucide-react";
 import logo from "../assets/logo.jpg";
 import { products } from "../data/products";
+import { CATEGORY_ORDER, slugify } from "../data/categories";
 
 /* ── edit these ── */
 const AGENCY_NAME = "Advertising Branding & Marketing";
@@ -38,13 +39,17 @@ const socials = [
   { href: `mailto:${EMAIL}`, label: "Email", Icon: Mail },
 ];
 
+/* only categories that actually have products, in your defined order */
+const footerCategories = CATEGORY_ORDER.filter((c) =>
+  products.some((p) => p.category === c)
+);
+
 /* script headings need room — never leading-none with font-script */
 const heading =
   "bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text pb-1 font-script text-[30px] leading-[1.45] text-transparent sm:text-[34px]";
 
-/* shared link style for the three columns */
 const colLink =
-  "group inline-flex items-center gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta";
+  "group inline-flex items-start gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta";
 
 export default function Footer() {
   return (
@@ -101,7 +106,7 @@ export default function Footer() {
               {nav.map(([label, path]) => (
                 <li key={path}>
                   <Link to={path} className={colLink}>
-                    <span className="h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
+                    <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
                     {label}
                   </Link>
                 </li>
@@ -109,18 +114,24 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ── products ── */}
+          {/* ── categories (was individual products) ── */}
           <div className="lg:col-span-3">
             <h3 className={heading}>Our Products</h3>
             <ul className="mt-4 grid gap-3.5 text-[17px] sm:text-[18px]">
-              {products.slice(0, 5).map((p) => (
-                <li key={p.id}>
-                  <Link to={`/product/${p.id}`} className={colLink}>
-                    <span className="mt-2 h-1 w-1 shrink-0 self-start rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
-                    {p.name}
+              {footerCategories.map((c) => (
+                <li key={c}>
+                  <Link to={`/products?category=${slugify(c)}`} className={colLink}>
+                    <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
+                    {c}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link to="/products" className={`${colLink} font-semibold text-brand-magenta`}>
+                  <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
+                  View all products
+                </Link>
+              </li>
             </ul>
           </div>
 

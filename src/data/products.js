@@ -1,41 +1,33 @@
 /* ──────────────────────────────────────────────────────────────
-   IMAGES
-   Put every file in  src/assets/productes/
-   Keep the exact filenames below, or change the path here.
+   IMAGES — put every file in  src/assets/productes/
    ────────────────────────────────────────────────────────────── */
-
-/* existing */
 import examBoardName   from "../assets/productes/exam-board-name.jpg";
 import examBoardPhoto  from "../assets/productes/exam-board-photo.jpg";
 import cartoonBoard    from "../assets/productes/cartoon-board.jpg";
 import kitchenFrame    from "../assets/productes/kitchen-frame.jpg";
 import photoFrame      from "../assets/productes/photo-frame.jpg";
 
-/* new — add these 8 files */
 import writingBoard    from "../assets/productes/writing-board.jpg";
 import birthdayFrame   from "../assets/productes/birthday-theme-frame.jpg";
 import kidsPhotoFrame  from "../assets/productes/kids-photo-frame.jpg";
 import kitchenFrame1   from "../assets/productes/kitchen-frame-1.jpg";
 import kitchenFrame2   from "../assets/productes/kitchen-frame-2.jpg";
 import kitchenFrame3   from "../assets/productes/kitchen-frame-3.jpg";
-import weddingFrameLg  from "../assets/productes/wedding-gift.jpg";
+import weddingFrame  from "../assets/productes/wedding-gift.jpg";
 
 /* ══════════════════════════════════════════════════════════════
    PRODUCTS
-   price     = what the customer pays (after discount)
-   oldPrice  = the listed price, shown struck through
-   The % OFF badge is calculated from these two — don't set it manually.
-
-   `rating` / `reviews` drive the star row. Remove both and stars
-   simply don't render. ⚠️ Replace with real numbers before launch.
+   `category` must match a name in data/categories.js exactly.
+   price    = what the customer pays · oldPrice = struck-through price
+   The % OFF badge is calculated from the two — never set manually.
    ══════════════════════════════════════════════════════════════ */
 
 export const products = [
-  /* ───────────── EXAM / WRITING BOARDS ───────────── */
+  /* ═══════ 1 · WRITING & EXAM BOARDS ═══════ */
   {
     id: "board-name",
     name: "Customized Name Exam Board",
-    category: "Exam Boards",
+    category: "Writing & Exam Boards",
     price: 349,
     oldPrice: 449,
     image: examBoardName,
@@ -51,11 +43,10 @@ export const products = [
       "Design shared for your approval before making",
     ],
   },
-
   {
     id: "board-photo",
     name: "Name + Photo Exam Board",
-    category: "Exam Boards",
+    category: "Writing & Exam Boards",
     price: 449,
     oldPrice: 549,
     image: examBoardPhoto,
@@ -71,11 +62,10 @@ export const products = [
       "No more lost or swapped boards in class",
     ],
   },
-
   {
     id: "cartoon-board",
     name: "Cartoon Theme Exam Board",
-    category: "Exam Boards",
+    category: "Writing & Exam Boards",
     price: 399,
     oldPrice: 499,
     image: cartoonBoard,
@@ -91,18 +81,16 @@ export const products = [
       "Built for daily school use",
     ],
   },
-
   {
-    /* 1 · Writing board — 14 × 9.8 in — ₹599, 5% off */
+    /* 14 × 9.8 in — ₹599, 5% off */
     id: "writing-board",
-    name: "Customized Writing Board",
-    category: "Exam Boards",
+    name: "Personalized Kids Writing Board",
+    category: "Writing & Exam Boards",
     price: 569,
     oldPrice: 599,
     image: writingBoard,
     sizes: ["14 × 9.8 in"],
-    description:
-      "A sturdy personalized writing board for everyday school work and exams.",
+    description: "A sturdy personalized writing board for everyday school work and exams.",
     benefits: [
       "Personalised with your child's name and theme",
       "14 × 9.8 inch — fits a standard school bag",
@@ -111,11 +99,11 @@ export const products = [
     ],
   },
 
-  /* ───────────── PHOTO FRAMES ───────────── */
+  /* ═══════ 2 · CUSTOMIZED PHOTO FRAMES ═══════ */
   {
     id: "photo-frame",
     name: "Customized Photo Frame",
-    category: "Photo Frames",
+    category: "Customized Photo Frames",
     price: 599,
     oldPrice: 799,
     image: photoFrame,
@@ -131,19 +119,17 @@ export const products = [
       "Design approval before printing",
     ],
   },
-
   {
-    /* 2 · Birthday theme frame — 13 × 13 in — ₹1800, 10% off */
+    /* 13 × 13 in — ₹1800, 10% off */
     id: "birthday-theme-frame",
-    name: "Birthday Theme Frame",
-    category: "Photo Frames",
+    name: "Birthday Photo Frame",
+    category: "Customized Photo Frames",
     price: 1620,
     oldPrice: 1800,
     image: birthdayFrame,
     tag: "Birthday",
     sizes: ["13 × 13 in"],
-    description:
-      "A birthday-themed frame built around your favourite photo, name and message.",
+    description: "A birthday-themed frame built around your favourite photo, name and message.",
     benefits: [
       "Choose the birthday theme and colours",
       "Photo, name and age or message included",
@@ -151,19 +137,17 @@ export const products = [
       "Design approval before printing",
     ],
   },
-
   {
-    /* 3 · Kids photo frame — 24 × 24 in — ₹4999, 10% off */
+    /* 24 × 24 in — ₹4999, 10% off */
     id: "kids-photo-frame",
-    name: "Customized Kids Photo Frame",
-    category: "Photo Frames",
+    name: "Kids Photo Frame",
+    category: "Customized Photo Frames",
     price: 4499,
     oldPrice: 4999,
     image: kidsPhotoFrame,
     tag: "Premium",
     sizes: ["24 × 24 in"],
-    description:
-      "A large statement frame for your child's best photograph, made to order.",
+    description: "A large statement frame for your child's best photograph, made to order.",
     benefits: [
       "24 × 24 inch — a centrepiece for any wall",
       "Photo, name and theme of your choice",
@@ -172,13 +156,12 @@ export const products = [
     ],
   },
 
-  /* ───────────── KITCHEN FRAMES ─────────────
-     ⚠️ Three kitchen frames at different prices. Rename them to
-     match the actual designs (e.g. by theme or material). */
+  /* ═══════ 4 · KITCHEN COLLECTION ═══════
+     ⚠️ Rename these to match the real designs. */
   {
     id: "kitchen-frame",
     name: "Customized Kitchen Frame",
-    category: "Photo Frames",
+    category: "Kitchen Collection",
     price: 649,
     oldPrice: 849,
     image: kitchenFrame,
@@ -194,18 +177,16 @@ export const products = [
       "Design approval before printing",
     ],
   },
-
   {
-    /* 4 · Kitchen frame — 15 × 12 in — ₹2299, 10% off */
-    id: "kitchen-frame-classic",
-    name: "Kitchen Frame — Classic",
-    category: "Photo Frames",
+    /* 15 × 12 in — ₹2299, 10% off */
+    id: "kitchen-katta-frame",
+    name: "Kitchen Katta Frame",
+    category: "Kitchen Collection",
     price: 2069,
     oldPrice: 2299,
     image: kitchenFrame1,
     sizes: ["15 × 12 in"],
-    description:
-      "A personalized kitchen frame with your photo, name and a warm message.",
+    description: "A personalized kitchen frame with your photo, name and a warm message.",
     benefits: [
       "15 × 12 inch — fits neatly above a counter",
       "Photo, name and message of your choice",
@@ -213,37 +194,16 @@ export const products = [
       "Design approval before printing",
     ],
   },
-
   {
-    /* 5 · Kitchen frame — 15 × 12 in — ₹2199, 5% off */
-    id: "kitchen-frame-floral",
-    name: "Kitchen Frame — Floral",
-    category: "Photo Frames",
+    /* 15 × 12 in — ₹2199, 5% off */
+    id: "annapurna-kitchen-frame",
+    name: "Annapurna Kitchen Frame",
+    category: "Kitchen Collection",
     price: 2089,
     oldPrice: 2199,
     image: kitchenFrame2,
     sizes: ["15 × 12 in"],
-    description:
-      "A floral-styled kitchen frame personalised with your photo and message.",
-    benefits: [
-      "15 × 12 inch — a bright kitchen wall piece",
-      "Floral design with your photo and name",
-      "Easy-to-clean finish",
-      "Design approval before printing",
-    ],
-  },
-
-  {
-    /* 6 · Kitchen frame — 15 × 12 in — ₹2199, 5% off */
-    id: "kitchen-frame-traditional",
-    name: "Kitchen Frame — Traditional",
-    category: "Photo Frames",
-    price: 2089,
-    oldPrice: 2199,
-    image: kitchenFrame3,
-    sizes: ["15 × 12 in"],
-    description:
-      "A traditional kitchen frame with your photo, name and a heartfelt line.",
+    description: "A traditional Annapurna-themed kitchen frame with your photo and message.",
     benefits: [
       "15 × 12 inch — warm traditional styling",
       "Photo, name and message included",
@@ -251,28 +211,45 @@ export const products = [
       "Design approval before printing",
     ],
   },
-
-  /* ───────────── WEDDING GIFTS ───────────── */
   {
-    /* 7 · Wedding gift — 24 × 24 in — ₹4999 incl. shipping, 10% off */
-    id: "wedding-gift-large",
-    name: "Wedding Gift Frame — 24 × 24 in",
-    category: "Gift Creations",
-    price: 4499,
-    oldPrice: 4999,
-    image: weddingFrameLg,
-    tag: "Shipping included",
-    sizes: ["24 × 24 in"],
-    description:
-      "A large personalized wedding frame for the couple — photo, names and date.",
+    /* 15 × 12 in — ₹2199, 5% off */
+    id: "swayampakghar-frame",
+    name: "Personalized Swayampakghar Frame",
+    category: "Kitchen Collection",
+    price: 2089,
+    oldPrice: 2199,
+    image: kitchenFrame3,
+    sizes: ["15 × 12 in"],
+    description: "A Marathi swayampakghar frame personalised with your photo, name and line.",
     benefits: [
-      "24 × 24 inch — a wedding centrepiece",
+      "15 × 12 inch — a bright kitchen wall piece",
+      "Photo, name and message in your own words",
+      "Easy-to-clean finish",
+      "Design approval before printing",
+    ],
+  },
+
+  /* ═══════ 5 · WEDDING & COUPLE COLLECTION ═══════ */
+  {
+    /* 13 × 13 in — ₹2799 → ₹2519 · 24 × 24 in — ₹4999 → ₹4499 (both incl. shipping) */
+    id: "gathbandhan-frame",
+    name: "Gathbandhan Couple Frame",
+    category: "Wedding & Couple Collection",
+    price: 2519,
+    oldPrice: 2799,
+    image: weddingFrame,
+    tag: "Shipping included",
+    sizes: ["13 × 13 in", "24 × 24 in"],
+    description:
+      "A personalized wedding frame for the couple — photo, names and wedding date, made to order.",
+    benefits: [
       "Couple's photo, names and wedding date",
+      "13 × 13 in — ₹2,519 · 24 × 24 in — ₹4,499",
       "Shipping included in the price",
       "Design approval before printing",
     ],
   },
 
-  
-
+  /* ═══════ 3 · PREMIUM CUSTOMIZED FRAMES — add products here ═══════ */
+  /* ═══════ 6 · FESTIVE & HOME DÉCOR — add products here ═══════ */
 ];

@@ -3,37 +3,38 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import ProductCard from "./ProductCard";
 import { products } from "../data/products";
-
-const ORDER = ["Exam Boards", "Photo Frames", "Gift Creations", "School Essentials"];
+import { CATEGORY_ORDER, slugify } from "../data/categories";
 
 const groupByCategory = (list) => {
   const map = list.reduce((acc, p) => {
     (acc[p.category] ||= []).push(p);
     return acc;
   }, {});
-  const known = ORDER.filter((c) => map[c]);
-  const rest = Object.keys(map).filter((c) => !ORDER.includes(c));
+  const known = CATEGORY_ORDER.filter((c) => map[c]);
+  const rest = Object.keys(map).filter((c) => !CATEGORY_ORDER.includes(c));
   return [...known, ...rest].map((c) => [c, map[c]]);
 };
 
-export default function CategoryProducts({ onAddToCart }) {
+export default function CategoryProducts() {
   const reduce = useReducedMotion();
   const groups = groupByCategory(products);
 
   return (
-    <section className="py-16 lg:py-20 bg-brand-cream">
+    <section className="bg-brand-cream py-16 lg:py-20">
       <div className="container-page">
         <motion.div
           initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }} transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto"
+          className="mx-auto max-w-2xl text-center"
         >
-          <span className="inline-flex items-center rounded-full bg-white ring-1 ring-brand-gold/40 px-3.5 py-1.5 text-[11px] tracking-[0.22em] uppercase text-brand-gold font-semibold">
+          <span className="inline-flex items-center rounded-full bg-white px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-gold ring-1 ring-brand-gold/40">
             Our collection
           </span>
-          <p className="font-script text-2xl text-brand-pink mt-4">Loved again and again</p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-brand-ink">Shop by Category</h2>
-          <p className="text-brand-muted text-sm mt-3 leading-6">
+          <p className="mt-4 pb-0.5 font-script text-[28px] leading-[1.4] text-brand-pink sm:text-3xl">
+            Loved again and again
+          </p>
+          <h2 className="font-display text-3xl font-bold text-brand-ink sm:text-4xl">Shop by Category</h2>
+          <p className="mt-3 text-[15px] leading-7 text-brand-muted sm:text-base">
             Every piece is made to order — name, photo and theme chosen by you.
           </p>
         </motion.div>
@@ -41,22 +42,27 @@ export default function CategoryProducts({ onAddToCart }) {
         {groups.map(([category, items], gi) => (
           <div key={category} className={gi === 0 ? "mt-12" : "mt-16"}>
             <div className="flex items-center gap-4">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold text-brand-ink shrink-0">{category}</h3>
+              <h3 className="shrink-0 font-display text-[22px] font-bold text-brand-ink sm:text-3xl">{category}</h3>
               <span className="h-px flex-1 bg-gradient-to-r from-brand-gold/60 via-pink-200 to-transparent" />
-              <span className="shrink-0 rounded-full bg-white ring-1 ring-pink-100 px-3 py-1 text-[11px] font-semibold text-brand-magenta">
-                {items.length} {items.length === 1 ? "item" : "items"}
-              </span>
+              <Link
+                to={`/products?category=${slugify(category)}`}
+                className="shrink-0 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-brand-magenta ring-1 ring-pink-100 hover:ring-brand-pink/50 sm:text-[12px]"
+              >
+                View all ({items.length})
+              </Link>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-6">
-              {items.map((p, k) => (
-                <motion.div key={p.id}
+            {/* max 4 per section — the rest live behind "View all" */}
+            <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+              {items.slice(0, 4).map((p, k) => (
+                <motion.div
+                  key={p.id}
                   initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: reduce ? 0 : k * 0.07 }}
                   whileHover={reduce ? {} : { y: -6 }}
                 >
-                  <ProductCard product={p} onAddToCart={onAddToCart} />
+                  <ProductCard product={p} />
                 </motion.div>
               ))}
             </div>
@@ -64,8 +70,10 @@ export default function CategoryProducts({ onAddToCart }) {
         ))}
 
         <div className="mt-12 text-center">
-          <Link to="/shop"
-            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-8 py-3.5 font-semibold text-white shadow-[0_14px_30px_-12px_rgba(214,36,159,.9)] transition-transform hover:-translate-y-0.5">
+          <Link
+            to="/products"
+            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-8 py-3.5 font-semibold text-white shadow-[0_14px_30px_-12px_rgba(214,36,159,.9)] transition-transform hover:-translate-y-0.5"
+          >
             View all products
             <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
           </Link>
