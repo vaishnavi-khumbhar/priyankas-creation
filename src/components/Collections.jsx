@@ -137,18 +137,18 @@ export default function Collections() {
           </span>
 
           {/* Script Heading */}
-          <p
-            className="
-              mt-3
-              font-script
-              text-xl
-              text-brand-pink
-              sm:mt-4
-              sm:text-3xl
-            "
-          >
-            Shop by collection
-          </p>
+         <p
+  className="
+    mt-3
+    font-script
+    text-2xl
+    text-brand-pink
+    sm:mt-4
+    sm:text-3xl
+  "
+>
+  Shop by collection
+</p>
 
           {/* Main Heading */}
           <h2
@@ -391,18 +391,18 @@ export default function Collections() {
                   </h3>
 
                   {/* ================= DESCRIPTION ================= */}
-                  <p
-                    className="
-                      mt-2
-                      text-[13px]
-                      leading-5
-                      text-brand-muted
-                      sm:text-[15px]
-                      sm:leading-6
-                    "
-                  >
-                    {desc}
-                  </p>
+                 <p
+  className="
+    mt-2
+    text-[15px]
+    leading-6
+    text-brand-muted
+    sm:text-[15px]
+    sm:leading-6
+  "
+>
+  {desc}
+</p>
 
                   {/* ================= CHIPS ================= */}
                   <div

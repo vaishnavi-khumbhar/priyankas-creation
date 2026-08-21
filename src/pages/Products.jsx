@@ -58,11 +58,14 @@ export default function Products() {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <p className="font-script text-2xl text-brand-pink sm:text-3xl">Our full collection</p>
-          <h1 className="mt-1 font-display text-3xl font-bold text-brand-ink sm:text-4xl">
+          {/* script needs breathing room — never leading-none */}
+          <p className="pb-1 font-script text-[28px] leading-[1.4] text-brand-pink sm:text-4xl">
+            Our full collection
+          </p>
+          <h1 className="mt-1 font-display text-[30px] font-bold leading-tight text-brand-ink sm:text-5xl">
             {category ? CATEGORIES.find((c) => slug(c) === category) || "Products" : "All Products"}
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-brand-muted">
+          <p className="mx-auto mt-3 max-w-xl text-[15px] font-medium leading-[1.7] text-brand-muted sm:text-lg sm:leading-8">
             Every piece is made to order — your child&apos;s name, their photo, their favourite theme.
           </p>
         </motion.div>
@@ -70,11 +73,11 @@ export default function Products() {
         {/* ── active search term ── */}
         {q && (
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-brand-ink ring-1 ring-pink-100">
-              <Search size={14} className="text-brand-magenta" />
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-[15px] text-brand-ink ring-1 ring-pink-100">
+              <Search size={15} className="text-brand-magenta" />
               Results for <b className="font-semibold">“{q}”</b>
               <button onClick={clearAll} aria-label="Clear search" className="text-brand-muted hover:text-brand-magenta">
-                <X size={14} />
+                <X size={15} />
               </button>
             </span>
           </div>
@@ -85,7 +88,7 @@ export default function Products() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setCategory("")}
-              className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
+              className={`rounded-full px-4 py-2.5 text-[13px] font-semibold transition-all sm:text-sm ${
                 !category
                   ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
                   : "border border-pink-200 bg-white text-brand-ink hover:border-brand-pink/60"
@@ -101,7 +104,7 @@ export default function Products() {
                 <button
                   key={c}
                   onClick={() => setCategory(slug(c))}
-                  className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
+                  className={`rounded-full px-4 py-2.5 text-[13px] font-semibold transition-all sm:text-sm ${
                     active
                       ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
                       : "border border-pink-200 bg-white text-brand-ink hover:border-brand-pink/60"
@@ -113,8 +116,8 @@ export default function Products() {
             })}
           </div>
 
-          <label className="inline-flex shrink-0 items-center gap-2 rounded-full border border-pink-200 bg-white px-4 py-2 text-xs text-brand-muted">
-            <SlidersHorizontal size={14} className="text-brand-magenta" />
+          <label className="inline-flex shrink-0 items-center gap-2 rounded-full border border-pink-200 bg-white px-4 py-2.5 text-[13px] text-brand-muted sm:text-sm">
+            <SlidersHorizontal size={15} className="text-brand-magenta" />
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
@@ -127,7 +130,7 @@ export default function Products() {
           </label>
         </div>
 
-        <p className="mt-4 text-xs text-brand-muted">
+        <p className="mt-4 text-[13px] font-medium text-brand-muted sm:text-sm">
           Showing {list.length} {list.length === 1 ? "product" : "products"}
         </p>
 
@@ -147,15 +150,15 @@ export default function Products() {
             ))}
           </div>
         ) : (
-          <div className="mt-8 grid place-items-center rounded-[24px] border border-dashed border-pink-200 bg-white/70 p-12 text-center">
-            <Search size={26} className="text-brand-magenta" />
-            <p className="mt-3 font-display text-xl font-semibold text-brand-ink">No products found</p>
-            <p className="mt-2 max-w-sm text-sm leading-6 text-brand-muted">
+          <div className="mt-8 grid place-items-center rounded-[24px] border border-dashed border-pink-200 bg-white/70 p-8 text-center sm:p-12">
+            <Search size={28} className="text-brand-magenta" />
+            <p className="mt-3 font-display text-[22px] font-semibold text-brand-ink sm:text-2xl">No products found</p>
+            <p className="mt-2 max-w-sm text-[15px] leading-[1.7] text-brand-muted sm:text-base">
               {q ? <>Nothing matched “{q}”. Try “exam board”, “frame” or “gift”.</> : "Nothing in this category yet."}
             </p>
             <button
               onClick={clearAll}
-              className="mt-5 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-7 py-3 text-sm font-semibold text-white"
+              className="mt-5 rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-7 py-3 text-[15px] font-semibold text-white"
             >
               View all products
             </button>
@@ -163,14 +166,23 @@ export default function Products() {
         )}
 
         {/* ── help line ── */}
-        <div className="mt-12 rounded-[24px] border border-pink-100 bg-white p-6 text-center">
-          <p className="font-script text-2xl text-brand-pink">Can&apos;t find what you need?</p>
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-brand-muted">
-            Tell us the theme, size or occasion you have in mind — most of our work starts as a custom request.
-          </p>
+        <div className="mt-12 rounded-[24px] border border-pink-100 bg-white p-6 text-center sm:p-8">
+         <p
+  className="pb-0.5 font-script text-2xl sm:text-3xl leading-[1.4] text-brand-pink"
+>
+  Can&apos;t find what you need?
+</p>
+
+<p
+  className="mx-auto mt-2 max-w-lg text-base sm:text-lg leading-7 sm:leading-8 text-brand-muted font-medium"
+  style={{ fontFamily: "'Poppins', sans-serif" }}
+>
+  Tell us the theme, size or occasion you have in mind — most of our work
+  starts as a custom request.
+</p>
           <Link
             to="/contact"
-            className="mt-5 inline-flex rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-7 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_-14px_rgba(214,36,159,.9)] transition-transform hover:-translate-y-0.5"
+            className="mt-5 inline-flex rounded-full bg-gradient-to-r from-brand-pink to-brand-purple px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_-14px_rgba(214,36,159,.9)] transition-transform hover:-translate-y-0.5 sm:text-base"
           >
             Send your requirement
           </Link>

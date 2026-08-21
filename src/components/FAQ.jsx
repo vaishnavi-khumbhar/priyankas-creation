@@ -112,12 +112,12 @@ export default function FAQ() {
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-brand-ink mt-2">
             Frequently Asked Questions
           </h2>
-          <p
-            className="text-brand-muted mt-3 leading-7"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-          >
-            Everything parents usually ask before ordering a personalised board.
-          </p>
+        <p
+  className="text-brand-muted text-base sm:text-lg mt-3 leading-7 sm:leading-8 font-medium"
+  style={{ fontFamily: "'Poppins', sans-serif" }}
+>
+  Everything parents usually ask before ordering a personalised board.
+</p>
         </motion.div>
 
         <div className="max-w-2xl mx-auto space-y-4">

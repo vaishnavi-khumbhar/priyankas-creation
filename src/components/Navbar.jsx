@@ -32,6 +32,10 @@ const nav = [
   ["Contact", "/contact"],
 ];
 
+/* pages that already have their own WhatsApp button or a form/CTA the
+   floating button would sit on top of */
+const HIDE_FLOATING_ON = ["/contact", "/cart", "/checkout", "/login", "/profile", "/order-success", "/track-order"];
+
 const groupByCategory = (list) =>
   Object.entries(
     list.reduce((acc, p) => {
@@ -65,6 +69,9 @@ export default function Navbar() {
 
   const groups = groupByCategory(products);
   const initials = (user?.name || "").trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("");
+
+  /* don't float the button over forms / pay buttons */
+  const hideFloating = HIDE_FLOATING_ON.some((r) => pathname.startsWith(r));
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -193,11 +200,7 @@ export default function Navbar() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent" />
 
         <div className="container-page flex h-[76px] items-center gap-3 lg:h-[92px] lg:gap-5">
-          {/* ── logo ──
-              FIX: the script font has tall loops and a long descender on the "y".
-              `leading-none` clipped them at the top. Everything here now uses
-              relaxed line-height + a little vertical padding, and the wrapper
-              never clips. */}
+          {/* ── logo ── */}
           <Link to="/" className="group flex shrink-0 items-center gap-2.5">
             <span className="relative grid shrink-0 place-items-center">
               <span className="absolute inset-0 scale-90 rounded-full bg-brand-pink/25 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
@@ -212,35 +215,32 @@ export default function Navbar() {
 
             <span className="block overflow-visible">
               {/* mobile / tablet */}
-              <span className="flex items-baseline gap-1 whitespace-nowrap font-script text-[24px] leading-[1.5] lg:hidden">
-                <span className="bg-gradient-to-r from-brand-pink to-brand-magenta bg-clip-text font-script text-[28px] font-semibold leading-tight text-transparent sm:text-[30px] lg:text-[32px]">
-  Priyanka&apos;s
-</span>
-<span className="bg-gradient-to-r from-brand-magenta to-brand-purple bg-clip-text font-script text-[28px] font-semibold leading-tight text-transparent sm:text-[30px] lg:text-[32px]">
-  Creation
-</span>
+              <span className="flex items-baseline gap-1 whitespace-nowrap lg:hidden">
+                <span className="bg-gradient-to-r from-brand-pink to-brand-magenta bg-clip-text font-script text-[26px] font-semibold leading-[1.45] text-transparent sm:text-[30px]">
+                  Priyanka&apos;s
+                </span>
+                <span className="bg-gradient-to-r from-brand-magenta to-brand-purple bg-clip-text font-script text-[26px] font-semibold leading-[1.45] text-transparent sm:text-[30px]">
+                  Creation
+                </span>
               </span>
 
               {/* desktop */}
-             <span className="hidden whitespace-nowrap bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text py-0.5 font-script text-[34px] leading-[1.3] text-transparent lg:block 2xl:text-[38px]">
-  Priyanka&apos;s Creation
-</span>
+              <span className="hidden whitespace-nowrap bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text py-0.5 font-script text-[34px] leading-[1.3] text-transparent lg:block 2xl:text-[38px]">
+                Priyanka&apos;s Creation
+              </span>
 
-<span className="hidden whitespace-nowrap text-[10px] font-medium uppercase leading-[1.5] tracking-[0.28em] text-brand-gold lg:block 2xl:text-[11px]">
-  Custom Designs &amp; Gifts
-</span>
+              <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase leading-[1.5] tracking-[0.28em] text-brand-gold lg:block 2xl:text-[11px]">
+                Custom Designs &amp; Gifts
+              </span>
             </span>
           </Link>
 
           {/* ── desktop nav ── */}
-          <nav className="ml-auto hidden shrink-0 items-center gap-5 text-[14px] lg:flex xl:gap-7 xl:text-[15px] 2xl:gap-9">
+          <nav className="ml-auto hidden shrink-0 items-center gap-5 text-[16px] font-medium lg:flex xl:gap-7 xl:text-[17px] 2xl:gap-9 2xl:text-[18px]">
             {nav.map(([label, path]) =>
               label !== "Products" ? (
                 <NavLink key={path} to={path} className={link}>{label}</NavLink>
               ) : (
-                /* FIX: the label and the chevron are now separate controls.
-                   Clicking "Products" always navigates to /products;
-                   the chevron only opens the menu. Hover still opens it. */
                 <div
                   key={path}
                   className="relative flex items-center gap-1"
@@ -256,9 +256,9 @@ export default function Navbar() {
                     aria-label="Show product categories"
                     aria-expanded={dropdown}
                     onClick={() => setDropdown((v) => !v)}
-                    className="grid h-6 w-6 place-items-center rounded-full text-brand-ink transition-colors hover:text-brand-magenta"
+                    className="grid h-7 w-7 place-items-center rounded-full text-brand-ink transition-colors hover:text-brand-magenta"
                   >
-                    <ChevronDown size={15} className={`transition-transform duration-300 ${dropdown ? "rotate-180" : ""}`} />
+                    <ChevronDown size={17} className={`transition-transform duration-300 ${dropdown ? "rotate-180" : ""}`} />
                   </button>
 
                   <div
@@ -271,7 +271,7 @@ export default function Navbar() {
                       <div className="grid gap-7 p-7 sm:grid-cols-2">
                         {groups.map(([category, items]) => (
                           <div key={category}>
-                            <p className="border-b border-pink-100 pb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold">
+                            <p className="border-b border-pink-100 pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold">
                               {category}
                             </p>
                             <ul className="mt-3 grid gap-1">
@@ -280,7 +280,7 @@ export default function Navbar() {
                                   <Link
                                     to={`/product/${p.id}`}
                                     onClick={() => setDropdown(false)}
-                                    className="group flex items-center gap-2.5 rounded-xl px-2 py-2 text-[14px] text-brand-ink transition-colors hover:bg-brand-soft/70 hover:text-brand-magenta"
+                                    className="group flex items-center gap-2.5 rounded-xl px-2 py-2 text-[15px] text-brand-ink transition-colors hover:bg-brand-soft/70 hover:text-brand-magenta"
                                   >
                                     <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70 transition-opacity group-hover:opacity-100" />
                                     {p.name}
@@ -294,7 +294,7 @@ export default function Navbar() {
                       <Link
                         to="/products"
                         onClick={() => setDropdown(false)}
-                        className="flex items-center justify-center gap-1.5 border-t border-pink-100 bg-brand-soft/50 py-3.5 text-xs font-semibold text-brand-magenta hover:bg-brand-soft"
+                        className="flex items-center justify-center gap-1.5 border-t border-pink-100 bg-brand-soft/50 py-3.5 text-[13px] font-semibold text-brand-magenta hover:bg-brand-soft"
                       >
                         View all products →
                       </Link>
@@ -494,23 +494,22 @@ export default function Navbar() {
             >
               <span className="grid h-11 w-11 place-items-center rounded-full bg-white/20 text-sm font-bold">{initials}</span>
               <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold">{user.name}</span>
+                <span className="block truncate text-sm font-semibold">{user.name || `+91 ${user.phone}`}</span>
                 <span className="block text-[11px] text-white/80">View my account</span>
               </span>
             </Link>
           )}
 
           <div className="mt-4">
-            <NavLink to="/" className={({ isActive }) => `block border-b border-pink-50 py-3.5 text-lg ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}>
+            <NavLink to="/" className={({ isActive }) => `block border-b border-pink-50 py-4 text-[19px] ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}>
               Home
             </NavLink>
 
-            {/* Products row: tapping the label opens the page, the chevron opens the list */}
             <div className="flex items-center justify-between border-b border-pink-50">
               <NavLink
                 to="/products"
                 onClick={() => setOpen(false)}
-                className={({ isActive }) => `flex-1 py-3.5 text-lg ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}
+                className={({ isActive }) => `flex-1 py-4 text-[19px] ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}
               >
                 Products
               </NavLink>
@@ -548,7 +547,7 @@ export default function Navbar() {
             </div>
 
             {nav.slice(2).map(([label, path]) => (
-              <NavLink key={path} to={path} className={({ isActive }) => `block border-b border-pink-50 py-3.5 text-lg ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}>
+              <NavLink key={path} to={path} className={({ isActive }) => `block border-b border-pink-50 py-4 text-[19px] ${isActive ? "font-semibold text-brand-magenta" : "text-brand-ink"}`}>
                 {label}
               </NavLink>
             ))}
@@ -564,7 +563,7 @@ export default function Navbar() {
             </Link>
             {!isAuthed && (
               <Link to="/login" onClick={() => setOpen(false)} className="col-span-2 flex h-11 items-center justify-center gap-2 rounded-full bg-brand-soft text-sm font-medium text-brand-purple">
-                <UserRound size={16} /> Login / Sign Up
+                <UserRound size={16} /> Login
               </Link>
             )}
           </div>
@@ -594,16 +593,22 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* ── Floating WhatsApp button (mobile) ─────────── */}
-      <a
-        href={WA_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Order on WhatsApp"
-        className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_14px_30px_-8px_rgba(37,211,102,.75)] transition-transform hover:scale-105 md:hidden"
-      >
-        <WhatsAppIcon size={26} />
-      </a>
+      {/* ── Floating WhatsApp button (mobile) ───────────
+          Hidden on pages with their own form / pay button — it was
+          sitting on top of the Contact Number field and the Place
+          Order button. Also slightly smaller and tucked further into
+          the corner so it takes less of a 360px screen. */}
+      {!hideFloating && (
+        <a
+          href={WA_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Order on WhatsApp"
+          className="fixed bottom-4 right-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_14px_30px_-8px_rgba(37,211,102,.75)] transition-transform hover:scale-105 md:hidden"
+        >
+          <WhatsAppIcon size={23} />
+        </a>
+      )}
     </>
   );
 }

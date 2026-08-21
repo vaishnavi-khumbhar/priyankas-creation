@@ -40,7 +40,11 @@ const socials = [
 
 /* script headings need room — never leading-none with font-script */
 const heading =
-  "bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text pb-1 font-script text-[26px] leading-[1.45] text-transparent";
+  "bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text pb-1 font-script text-[30px] leading-[1.45] text-transparent sm:text-[34px]";
+
+/* shared link style for the three columns */
+const colLink =
+  "group inline-flex items-center gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta";
 
 export default function Footer() {
   return (
@@ -50,7 +54,6 @@ export default function Footer() {
       <div className="pointer-events-none absolute -bottom-28 right-0 h-[320px] w-[320px] rounded-full bg-brand-gold/15 blur-[100px]" />
 
       <div className="container-page relative pt-12 lg:pt-16">
-        {/* centred on mobile & tablet, left-aligned from lg up */}
         <div className="grid gap-10 text-center sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:text-left">
           {/* ── brand ── */}
           <div className="flex flex-col items-center sm:col-span-2 lg:col-span-4 lg:items-start">
@@ -64,7 +67,7 @@ export default function Footer() {
                 <span className="block bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text pb-0.5 font-script text-[32px] leading-[1.45] text-transparent sm:text-[36px]">
                   Priyanka&apos;s Creation
                 </span>
-                <span className="block text-[10px] font-semibold uppercase leading-[1.6] tracking-[0.3em] text-brand-gold">
+                <span className="block text-[10px] font-semibold uppercase leading-[1.6] tracking-[0.3em] text-brand-gold sm:text-[11px]">
                   Custom Designs &amp; Gifts
                 </span>
               </span>
@@ -94,14 +97,11 @@ export default function Footer() {
           {/* ── quick links ── */}
           <div className="lg:col-span-2">
             <h3 className={heading}>Quick Links</h3>
-            <ul className="mt-4 grid gap-3 text-[15px]">
+            <ul className="mt-4 grid gap-3.5 text-[17px] sm:text-[18px]">
               {nav.map(([label, path]) => (
                 <li key={path}>
-                  <Link
-                    to={path}
-                    className="group inline-flex items-center gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta"
-                  >
-                    <span className="h-1 w-1 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
+                  <Link to={path} className={colLink}>
+                    <span className="h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
                     {label}
                   </Link>
                 </li>
@@ -112,14 +112,11 @@ export default function Footer() {
           {/* ── products ── */}
           <div className="lg:col-span-3">
             <h3 className={heading}>Our Products</h3>
-            <ul className="mt-4 grid gap-3 text-[15px]">
+            <ul className="mt-4 grid gap-3.5 text-[17px] sm:text-[18px]">
               {products.slice(0, 5).map((p) => (
                 <li key={p.id}>
-                  <Link
-                    to={`/product/${p.id}`}
-                    className="group inline-flex items-center gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta"
-                  >
-                    <span className="h-1 w-1 shrink-0 rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
+                  <Link to={`/product/${p.id}`} className={colLink}>
+                    <span className="mt-2 h-1 w-1 shrink-0 self-start rounded-full bg-brand-pink opacity-0 transition-opacity group-hover:opacity-100" />
                     {p.name}
                   </Link>
                 </li>
@@ -130,22 +127,22 @@ export default function Footer() {
           {/* ── contact ── */}
           <div className="flex flex-col items-center lg:col-span-3 lg:items-start">
             <h3 className={heading}>Get In Touch</h3>
-            <ul className="mt-4 grid gap-3.5 text-[15px]">
+            <ul className="mt-4 grid gap-4 text-[17px] sm:text-[18px]">
               <li>
                 <a href={`tel:+91${PHONE}`} className="flex items-start justify-center gap-3 text-brand-muted transition-colors hover:text-brand-magenta lg:justify-start">
-                  <Phone size={16} className="mt-1 shrink-0 text-brand-pink" /> +91 {PHONE}
+                  <Phone size={18} className="mt-1 shrink-0 text-brand-pink" /> +91 {PHONE}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${EMAIL}`} className="flex items-start justify-center gap-3 break-all text-brand-muted transition-colors hover:text-brand-magenta lg:justify-start">
-                  <Mail size={16} className="mt-1 shrink-0 text-brand-pink" /> {EMAIL}
+                <a href={`mailto:${EMAIL}`} className="flex items-start justify-center gap-3 break-all text-[15px] text-brand-muted transition-colors hover:text-brand-magenta sm:text-[16px] lg:justify-start">
+                  <Mail size={18} className="mt-1 shrink-0 text-brand-pink" /> {EMAIL}
                 </a>
               </li>
               <li className="flex items-start justify-center gap-3 text-brand-muted lg:justify-start">
-                <Clock size={16} className="mt-1 shrink-0 text-brand-pink" /> Mon – Sun, {HOURS}
+                <Clock size={18} className="mt-1 shrink-0 text-brand-pink" /> Mon – Sun, {HOURS}
               </li>
               <li className="flex items-start justify-center gap-3 text-brand-muted lg:justify-start">
-                <MapPin size={16} className="mt-1 shrink-0 text-brand-pink" /> Pune, Maharashtra
+                <MapPin size={18} className="mt-1 shrink-0 text-brand-pink" /> Pune, Maharashtra
               </li>
             </ul>
 
@@ -153,9 +150,9 @@ export default function Footer() {
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex h-12 items-center gap-2 rounded-full bg-[#25D366] px-6 text-[15px] font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-transform hover:-translate-y-0.5"
+              className="mt-5 inline-flex h-12 items-center gap-2 rounded-full bg-[#25D366] px-6 text-[16px] font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-transform hover:-translate-y-0.5"
             >
-              <WhatsAppIcon size={17} /> Order on WhatsApp
+              <WhatsAppIcon size={18} /> Order on WhatsApp
             </a>
           </div>
         </div>
@@ -163,13 +160,13 @@ export default function Footer() {
         {/* ── bottom bar ── */}
         <div className="mt-12 border-t border-brand-gold/25 py-6">
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
-            <p className="text-sm font-medium leading-6 text-brand-muted">
+            <p className="text-[15px] font-medium leading-6 text-brand-muted">
               © {new Date().getFullYear()} Priyanka&apos;s Creation. All rights reserved.
             </p>
 
-            <p className="inline-flex flex-wrap items-center justify-center gap-1.5 text-sm font-medium leading-6 text-brand-muted">
+            <p className="inline-flex flex-wrap items-center justify-center gap-1.5 text-[15px] font-medium leading-6 text-brand-muted">
               Designed &amp; Developed with
-              <Heart size={13} className="fill-brand-pink text-brand-pink" />
+              <Heart size={14} className="fill-brand-pink text-brand-pink" />
               by
               <a
                 href={AGENCY_URL}

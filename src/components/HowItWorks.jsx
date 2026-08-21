@@ -55,8 +55,9 @@ export default function HowItWorks() {
               </span>
               <span className="absolute top-5 right-6 font-display text-4xl font-bold text-brand-pink/20">0{k + 1}</span>
               <h3 className="font-display text-lg font-semibold mt-5 text-brand-ink">{title}</h3>
-              <p className="text-[14px] text-brand-muted mt-2 leading-6">{text}</p>
-            </motion.div>
+<p className="text-[16px] text-brand-muted mt-2 leading-7">
+  {text}
+</p>            </motion.div>
           ))}
         </div>
 

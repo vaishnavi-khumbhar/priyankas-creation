@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Minus, Plus, Star, StarHalf, Heart, Share2, ShoppingCart, ChevronRight, X, ZoomIn,
-  ShieldCheck, Droplets, Truck, Check,
+  Check, Palette, Send, CheckCircle2, PackageCheck,
 } from "lucide-react";
 import { products } from "../data/products";
 import { discountOf, WA_NUMBER } from "../components/ProductCard";
@@ -16,12 +16,12 @@ const WhatsAppIcon = ({ size = 18, className = "" }) => (
   </svg>
 );
 
-const DEFAULT_SIZES = ["Standard", "Large"];
-const DEFAULT_BENEFITS = [
-  "100% waterproof, wipe-clean surface",
-  "Personalised with name, photo and theme",
-  "Design shared for your approval before making",
-  "Durable finish built for daily school use",
+/* how the order works — shown under the product image */
+const steps = [
+  { Icon: Palette,      title: "Choose a theme",     text: "Pick the cartoon, colour or style your child loves." },
+  { Icon: Send,         title: "Share the details",  text: "Send the name, a clear photo and your preferences on WhatsApp." },
+  { Icon: CheckCircle2, title: "Approve the design", text: "We show you the final design before anything is made." },
+  { Icon: PackageCheck, title: "Receive the board",  text: "Delivered ready to use — waterproof and built to last." },
 ];
 
 export const Stars = ({ value = 0, size = 15 }) => (
@@ -53,7 +53,7 @@ export default function ProductDetails() {
     setQty(1);
     setCopied(false);
     setLightbox(false);
-    setSize(product?.sizes?.length ? product.sizes[0] : DEFAULT_SIZES[0]);
+    setSize(product?.sizes?.[0] ?? null);
   }, [id, product]);
 
   useEffect(() => {
@@ -79,12 +79,12 @@ export default function ProductDetails() {
   }
 
   const off = discountOf(product);
-  const sizes = product.sizes?.length ? product.sizes : DEFAULT_SIZES;
-  const benefits = product.benefits?.length ? product.benefits : DEFAULT_BENEFITS;
+  const sizes = product.sizes ?? [];
+  const benefits = product.benefits ?? [];
   const wished = isWished(product.id);
 
   const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-    `Hi Priyanka's Creation! I want to order:\n\n• Product: ${product.name}\n• Size: ${size}\n• Quantity: ${qty}\n• Price: ₹${product.price} each\n\nPlease guide me with the customization details.`
+    `Hi Priyanka's Creation! I want to order:\n\n• Product: ${product.name}${size ? `\n• Size: ${size}` : ""}\n• Quantity: ${qty}\n• Price: ₹${product.price} each\n\nPlease guide me with the customization details.`
   )}`;
 
   const handleAdd = () => addToCart(product, qty, size);
@@ -115,38 +115,39 @@ export default function ProductDetails() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-brand-soft/70 to-white py-6 lg:py-10">
+      <section className="bg-gradient-to-b from-brand-soft/70 to-white py-5 lg:py-10">
         <div className="container-page">
-          <nav className="flex flex-wrap items-center gap-1.5 text-sm text-brand-muted">
-            <Link to="/" className="hover:text-brand-magenta">Home</Link>
-            <ChevronRight size={14} />
-            <Link to="/products" className="hover:text-brand-magenta">Products</Link>
-            <ChevronRight size={14} />
-            <span className="font-semibold text-brand-ink">{product.name}</span>
+          <nav className="flex items-center gap-1 text-[13px] text-brand-muted sm:gap-1.5 sm:text-sm">
+            <Link to="/" className="shrink-0 hover:text-brand-magenta">Home</Link>
+            <ChevronRight size={13} className="shrink-0" />
+            <Link to="/products" className="shrink-0 hover:text-brand-magenta">Products</Link>
+            <ChevronRight size={13} className="shrink-0" />
+            <span className="truncate font-semibold text-brand-ink">{product.name}</span>
           </nav>
 
-          <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* ── image + zoom ── */}
+          <div className="mt-4 grid gap-6 sm:mt-6 lg:grid-cols-2 lg:gap-12">
+            {/* ══════════ LEFT — image · trust · steps ══════════ */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <div className="relative rounded-[28px] bg-gradient-to-br from-brand-soft via-white to-purple-50 p-5 ring-1 ring-brand-gold/30">
+              <div className="relative rounded-[20px] bg-gradient-to-br from-brand-soft via-white to-purple-50 p-3 ring-1 ring-brand-gold/30 sm:rounded-[28px] sm:p-5">
                 {product.tag && (
-                  <span className="absolute left-5 top-5 z-20 rounded-full bg-brand-magenta px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow">
+                  <span className="absolute left-3 top-3 z-20 rounded-full bg-brand-magenta px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white shadow sm:left-5 sm:top-5 sm:px-3 sm:py-1 sm:text-[10px]">
                     {product.tag}
                   </span>
                 )}
-                <div className="absolute right-5 top-5 z-20 flex flex-col gap-2">
+
+                <div className="absolute right-3 top-3 z-20 flex flex-col gap-1.5 sm:right-5 sm:top-5 sm:gap-2">
                   <button
                     onClick={() => toggleWishlist(product)}
                     aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
-                    className={`grid h-9 w-9 place-items-center rounded-full bg-white shadow transition-all hover:scale-110 ${
+                    className={`grid h-8 w-8 place-items-center rounded-full bg-white shadow transition-all hover:scale-110 sm:h-9 sm:w-9 ${
                       wished ? "text-brand-magenta" : "text-brand-ink hover:text-brand-magenta"
                     }`}
                   >
-                    <Heart size={16} className={wished ? "fill-brand-magenta" : ""} />
+                    <Heart size={15} className={wished ? "fill-brand-magenta" : ""} />
                   </button>
                   <button onClick={handleShare} aria-label="Share"
-                    className="grid h-9 w-9 place-items-center rounded-full bg-white text-brand-ink shadow hover:text-brand-magenta">
-                    <Share2 size={16} />
+                    className="grid h-8 w-8 place-items-center rounded-full bg-white text-brand-ink shadow hover:text-brand-magenta sm:h-9 sm:w-9">
+                    <Share2 size={15} />
                   </button>
                 </div>
 
@@ -156,9 +157,13 @@ export default function ProductDetails() {
                   onMouseMove={onMove}
                   onMouseLeave={() => setLens((l) => ({ ...l, show: false }))}
                   aria-label="Zoom image"
-                  className="relative grid aspect-square w-full cursor-zoom-in place-items-center overflow-hidden rounded-[20px] bg-white/60"
+                  className="relative flex min-h-[260px] w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-[16px] bg-white/60 p-2 sm:min-h-[320px] sm:rounded-[20px] sm:p-3"
                 >
-                  <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" />
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-auto max-h-[340px] w-auto max-w-full rounded-[12px] object-contain sm:max-h-[420px] lg:max-h-[460px]"
+                  />
 
                   {lens.show && (
                     <span
@@ -167,8 +172,8 @@ export default function ProductDetails() {
                     />
                   )}
 
-                  <span className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold text-brand-ink shadow">
-                    <ZoomIn size={12} /> Tap to zoom
+                  <span className="absolute bottom-2.5 right-2.5 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-brand-ink shadow sm:bottom-3 sm:right-3 sm:px-2.5 sm:py-1">
+                    <ZoomIn size={11} /> Tap to zoom
                   </span>
                 </button>
 
@@ -184,107 +189,135 @@ export default function ProductDetails() {
                 )}
               </div>
 
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                {[
-                  [Droplets, "100% Waterproof", "Wipe-clean surface"],
-                  [ShieldCheck, "Design Approval", "Before we make it"],
-                  [Truck, "Pune Delivery", "Local & courier"],
-                ].map(([Icon, title, note]) => (
-                  <div key={title} className="rounded-2xl border border-pink-100 bg-white p-3 text-center">
-                    <Icon size={18} className="mx-auto text-brand-magenta" />
-                    <p className="mt-1.5 text-[11px] font-semibold text-brand-ink">{title}</p>
-                    <p className="text-[10px] leading-4 text-brand-muted">{note}</p>
-                  </div>
-                ))}
+              {/* ── how your order works — under the image ── */}
+              <div className="mt-4 rounded-[20px] border border-pink-100 bg-white p-4 sm:mt-5 sm:rounded-[24px] sm:p-5">
+                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-magenta sm:text-[13px]">
+                  How your order works
+                </p>
+
+                <ol className="mt-3.5 grid gap-3.5">
+                  {steps.map(({ Icon, title, text }, i) => (
+                    <li key={title} className="flex gap-3">
+                      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-brand-pink to-brand-purple text-white sm:h-10 sm:w-10">
+                        <Icon size={17} strokeWidth={1.9} />
+                        <span className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-white text-[9px] font-bold text-brand-magenta ring-1 ring-pink-100">
+                          {i + 1}
+                        </span>
+                      </span>
+                      <span className="min-w-0 pt-0.5">
+                        <span className="block text-[14px] font-bold leading-tight text-brand-ink sm:text-[15px]">
+                          {title}
+                        </span>
+                        <span className="mt-0.5 block text-[13px] leading-[1.55] text-brand-muted sm:text-[14px]">
+                          {text}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
               </div>
             </motion.div>
 
-            {/* ── details ── */}
+            {/* ══════════ RIGHT — details ══════════ */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-              <span className="inline-block rounded-full bg-brand-soft px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-gold">
+              <span className="inline-block rounded-full bg-brand-soft px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-brand-gold sm:px-3 sm:tracking-[0.18em]">
                 {product.category}
               </span>
 
-              <h1 className="mt-3 font-display text-3xl font-bold leading-tight text-brand-ink sm:text-4xl">{product.name}</h1>
+              <h1 className="mt-2.5 font-display text-[28px] font-bold leading-[1.2] text-brand-ink sm:mt-3 sm:text-4xl">
+                {product.name}
+              </h1>
 
               {product.rating > 0 && (
-                <div className="mt-2.5 flex items-center gap-2">
+                <div className="mt-2 flex items-center gap-2">
                   <Stars value={product.rating} size={15} />
-                  {product.reviews ? <span className="text-[12px] text-brand-muted">({product.reviews} reviews)</span> : null}
+                  {product.reviews ? <span className="text-[13px] text-brand-muted">({product.reviews} reviews)</span> : null}
                 </div>
               )}
 
-              <div className="mt-4 flex flex-wrap items-center gap-2.5">
-                <span className="font-display text-4xl font-bold text-green-600">₹{product.price}</span>
+              <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-4 sm:gap-2.5">
+                <span className="font-display text-[32px] font-bold text-green-600 sm:text-4xl">₹{product.price}</span>
                 {product.oldPrice > product.price && (
-                  <span className="text-base text-brand-muted line-through">₹{product.oldPrice}</span>
+                  <span className="text-[15px] text-brand-muted line-through sm:text-base">₹{product.oldPrice}</span>
                 )}
-                {off > 0 && <span className="rounded-md bg-green-600 px-2 py-1 text-[11px] font-bold text-white">{off}% OFF</span>}
-                <button onClick={handleShare} className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-brand-muted hover:text-brand-magenta">
+                {off > 0 && (
+                  <span className="rounded-md bg-green-600 px-2 py-0.5 text-[11px] font-bold text-white sm:py-1">
+                    {off}% OFF
+                  </span>
+                )}
+                <button onClick={handleShare} className="ml-auto inline-flex items-center gap-1.5 text-[13px] font-medium text-brand-muted hover:text-brand-magenta">
                   {copied ? <><Check size={13} /> Link copied</> : <><Share2 size={13} /> Share</>}
                 </button>
               </div>
 
-              <p className="mt-4 text-base leading-7 text-brand-muted">{product.description}</p>
+              <p className="mt-3 text-[15px] leading-[1.7] text-brand-muted sm:mt-4 sm:text-base sm:leading-7">
+                {product.description}
+              </p>
 
-              <div className="my-6 h-px bg-pink-100" />
+              <div className="my-5 h-px bg-pink-100 sm:my-6" />
 
-              <div className="flex flex-wrap gap-8">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold">Size</p>
-                  <div className="mt-2 flex gap-2">
-                    {sizes.map((s) => (
-                      <button key={s} onClick={() => setSize(s)}
-                        className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
-                          size === s ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
-                                     : "border border-pink-200 text-brand-ink hover:border-brand-pink/60"}`}>
-                        {s}
-                      </button>
-                    ))}
+              <div className="flex flex-wrap gap-6 sm:gap-8">
+                {sizes.length > 0 && (
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">Size</p>
+                    <div className="mt-2 flex gap-2">
+                      {sizes.map((s) => (
+                        <button key={s} onClick={() => setSize(s)}
+                          className={`rounded-full px-4 py-2 text-[13px] font-semibold transition-all ${
+                            size === s ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
+                                       : "border border-pink-200 text-brand-ink hover:border-brand-pink/60"}`}>
+                          {s}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold">Quantity</p>
-                  <div className="mt-2 inline-flex items-center gap-3 rounded-full border border-pink-200 px-2 py-1.5">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">Quantity</p>
+                  <div className="mt-2 inline-flex items-center gap-3 rounded-full border border-pink-200 px-2.5 py-1.5">
                     <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease"
                       className="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand-purple"><Minus size={14} /></button>
-                    <span className="w-6 text-center text-sm font-semibold text-brand-ink">{qty}</span>
+                    <span className="w-6 text-center text-[15px] font-semibold text-brand-ink">{qty}</span>
                     <button onClick={() => setQty((q) => q + 1)} aria-label="Increase"
                       className="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand-purple"><Plus size={14} /></button>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-2 gap-2.5 sm:mt-6 sm:gap-3">
                 <button onClick={handleAdd}
-                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-green-600 text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(22,163,74,.9)] transition-all hover:-translate-y-0.5 hover:bg-green-700">
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-full bg-green-600 text-[14px] font-semibold text-white shadow-[0_12px_26px_-14px_rgba(22,163,74,.9)] transition-all hover:-translate-y-0.5 hover:bg-green-700 sm:gap-2 sm:text-sm">
                   <ShoppingCart size={16} /> Add to Cart
                 </button>
                 <button onClick={handleBuyNow}
-                  className="flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-brand-pink to-brand-purple text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(214,36,159,.9)] transition-all hover:-translate-y-0.5">
+                  className="flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-brand-pink to-brand-purple text-[14px] font-semibold text-white shadow-[0_12px_26px_-14px_rgba(214,36,159,.9)] transition-all hover:-translate-y-0.5 sm:text-sm">
                   Buy Now
                 </button>
               </div>
 
               <a href={waLink} target="_blank" rel="noopener noreferrer"
-                className="mt-3 flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-all hover:-translate-y-0.5">
-                <WhatsAppIcon size={19} /> Order via WhatsApp
+                className="mt-3 flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-[14px] font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-all hover:-translate-y-0.5 sm:text-sm">
+                <WhatsAppIcon size={18} /> Order via WhatsApp
               </a>
 
-              <div className="mt-6 rounded-2xl border border-pink-100 bg-brand-soft/50 p-5">
-                <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand-magenta">Why parents choose this</p>
-                <ul className="mt-3 space-y-2">
-                  {benefits.map((b) => (
-                    <li key={b} className="flex gap-2 text-[15px] leading-6 text-brand-muted">
-                      <Check size={14} className="mt-1 shrink-0 text-green-600" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {benefits.length > 0 && (
+                <div className="mt-5 rounded-2xl border border-pink-100 bg-brand-soft/50 p-4 sm:mt-6 sm:p-5">
+                  <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-magenta sm:text-[13px]">
+                    Why parents choose this
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {benefits.map((b) => (
+                      <li key={b} className="flex gap-2 text-[14px] leading-[1.65] text-brand-muted sm:text-[15px]">
+                        <Check size={15} className="mt-1 shrink-0 text-green-600" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-              <p className="mt-4 text-[15px] leading-6 text-brand-muted">
+              <p className="mt-4 text-[14px] leading-[1.7] text-brand-muted sm:text-[15px]">
                 To personalise this product, share your child&apos;s name, a clear photograph and your preferred theme
                 after placing the order. We share the design for your approval before making it.
               </p>

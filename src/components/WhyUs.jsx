@@ -31,8 +31,8 @@ const points = [
 
 const stats = [
   ["100%", "Waterproof"],
-  ["4:3", "Design approval before making"],
   ["Pune", "Made locally"],
+  ["India", "Delivery across India"],
 ];
 
 export default function WhyUs() {
@@ -92,9 +92,9 @@ export default function WhyUs() {
                 </b>
 
                 {/* TEXT */}
-                <p className="mt-1 text-sm leading-5 text-brand-muted sm:text-base">
-                  {text}
-                </p>
+                <p className="mt-1 text-base leading-6 text-brand-muted sm:text-base">
+  {text}
+</p>
               </motion.div>
             ))}
           </div>

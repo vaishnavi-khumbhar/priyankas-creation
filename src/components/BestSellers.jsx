@@ -21,13 +21,13 @@ export default function BestSellers({ onAddToCart }) {
             </span>
             <p className="font-script text-4xl text-brand-pink mt-4">Loved again and again</p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-brand-ink">Best Loved Creations</h2>
-           <p
-  className="text-brand-muted text-sm sm:text-base mt-2 max-w-lg leading-6 sm:leading-7 font-medium mt-4"
+        <p
+  className="text-brand-muted text-base sm:text-lg mt-4 max-w-lg leading-7 sm:leading-8 font-medium"
   style={{ fontFamily: "'Poppins', sans-serif" }}
 >
   The designs parents order most — and come back for when the next school year starts.
 </p>
-          </div>
+    </div>
           <Link to="/products" className="group hidden sm:inline-flex items-center gap-1.5 font-semibold text-brand-magenta shrink-0">
             View all products
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1.5" />
