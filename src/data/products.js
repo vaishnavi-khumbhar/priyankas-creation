@@ -14,6 +14,7 @@ import kitchenFrame1   from "../assets/productes/kitchen-frame-1.jpg";
 import kitchenFrame2   from "../assets/productes/kitchen-frame-2.jpg";
 import kitchenFrame3   from "../assets/productes/kitchen-frame-3.jpg";
 import weddingFrame  from "../assets/productes/wedding-gift.jpg";
+import weddingFrame1  from "../assets/productes/wedding-gift1.jpg";
 
 /* ══════════════════════════════════════════════════════════════
    PRODUCTS
@@ -28,7 +29,7 @@ export const products = [
     id: "board-name",
     name: "Customized Name Exam Board",
     category: "Writing & Exam Boards",
-    price: 349,
+    price: 599,
     oldPrice: 449,
     image: examBoardName,
     tag: "Bestseller",
@@ -47,7 +48,7 @@ export const products = [
     id: "board-photo",
     name: "Name + Photo Exam Board",
     category: "Writing & Exam Boards",
-    price: 449,
+    price: 599,
     oldPrice: 549,
     image: examBoardPhoto,
     tag: "Popular",
@@ -66,7 +67,7 @@ export const products = [
     id: "cartoon-board",
     name: "Cartoon Theme Exam Board",
     category: "Writing & Exam Boards",
-    price: 399,
+    price: 599,
     oldPrice: 499,
     image: cartoonBoard,
     tag: "New",
@@ -162,7 +163,7 @@ export const products = [
     id: "kitchen-frame",
     name: "Customized Kitchen Frame",
     category: "Kitchen Collection",
-    price: 649,
+    price: 1800,
     oldPrice: 849,
     image: kitchenFrame,
     tag: "Special",
@@ -250,6 +251,36 @@ export const products = [
     ],
   },
 
+
+  {
+  id: "gathbandhan-frame",
+
+  name: "Gathbandhan Couple Frame",
+
+  category: "Wedding & Couple Collection",
+
+  price: 2200,
+
+  oldPrice: 2445,
+
+  image: weddingFrame1,
+
+  tag: "Shipping Included",
+
+  sizes: ["13 × 13 in"],
+
+  description:
+    "A personalized Gathbandhan couple wedding frame — featuring the couple's photo, names and wedding details, beautifully designed and made to order.",
+
+  benefits: [
+    "13 × 13 inch premium couple & wedding frame",
+    "Price: ₹2,200",
+    "10% OFF included",
+    "Shipping included in the price",
+    "Couple photo, names & wedding details personalized",
+    "Design approval before printing",
+  ],
+},
   /* ═══════ 3 · PREMIUM CUSTOMIZED FRAMES — add products here ═══════ */
   /* ═══════ 6 · FESTIVE & HOME DÉCOR — add products here ═══════ */
 ];
