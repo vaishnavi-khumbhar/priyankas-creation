@@ -102,7 +102,7 @@ export default function CustomerReviews() {
 
   return (
     <section
-      className="py-20 bg-[#fffafc] overflow-hidden"
+      className="py-15 bg-[#fffafc] overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

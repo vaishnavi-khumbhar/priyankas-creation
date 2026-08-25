@@ -1,8 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Play } from "lucide-react";
+import { Play, Sparkles } from "lucide-react";
 
 import video1 from "../assets/1.mp4";
 import video2 from "../assets/2.mp4";
+import video3 from "../assets/3.mp4";
 
 const videos = [
   {
@@ -15,27 +16,31 @@ const videos = [
     title: "Loved the Creation ✨",
     video: video2,
   },
+  {
+    id: 3,
+    title: "Made With Love 💕",
+    video: video3,
+  },
 ];
 
 export default function CustomerVideos() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-white py-10 sm:py-10 lg:py-12">
-
-      {/* ================= SOFT BACKGROUND GLOW ================= */}
+    <section className="relative overflow-hidden bg-white py-10 sm:py-8 lg:py-10">
+ 
+      {/* ================= SOFT BACKGROUND ================= */}
       <div
         className="
           pointer-events-none
           absolute
           -top-24
           left-1/2
-          h-[300px]
-          w-[700px]
+          h-[280px]
+          w-[650px]
           -translate-x-1/2
           rounded-full
-          bg-brand-soft
-          opacity-70
+          bg-brand-soft/70
           blur-[100px]
         "
       />
@@ -46,8 +51,8 @@ export default function CustomerVideos() {
           absolute
           -bottom-32
           left-1/2
-          h-[250px]
-          w-[500px]
+          h-[260px]
+          w-[520px]
           -translate-x-1/2
           rounded-full
           bg-pink-100/40
@@ -61,19 +66,16 @@ export default function CustomerVideos() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{
-            once: true,
-            amount: 0.4,
-          }}
+          viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-
-          {/* Small Label */}
+          {/* Label */}
           <span
             className="
               inline-flex
               items-center
+              gap-1.5
               rounded-full
               bg-brand-soft
               px-3.5
@@ -81,7 +83,7 @@ export default function CustomerVideos() {
               text-[10px]
               font-semibold
               uppercase
-              tracking-[0.22em]
+              tracking-[0.2em]
               text-brand-gold
               ring-1
               ring-brand-gold/40
@@ -113,7 +115,8 @@ export default function CustomerVideos() {
               text-2xl
               font-bold
               text-brand-ink
-              sm:text-4xl
+              sm:text-3xl
+              lg:text-4xl
             "
           >
             Real Moments, Real Happiness
@@ -123,13 +126,14 @@ export default function CustomerVideos() {
           <p
             className="
               mx-auto
-              mt-4
-              max-w-2xl
-              px-2
+              mt-3
+              max-w-xl
+              px-3
               text-sm
+              font-medium
               leading-6
               text-brand-muted
-              font-medium
+              sm:mt-4
               sm:text-base
               sm:leading-7
             "
@@ -143,16 +147,17 @@ export default function CustomerVideos() {
         {/* ================= VIDEOS ================= */}
         <div
           className="
+            mx-auto
             mt-8
             grid
+            max-w-6xl
             grid-cols-1
-            gap-4
-            sm:mt-11
+            gap-5
+            sm:mt-10
             sm:grid-cols-2
             sm:gap-5
-            lg:grid-cols-2
-            lg:max-w-4xl
-            lg:mx-auto
+            lg:grid-cols-3
+            lg:gap-6
           "
         >
           {videos.map((item, index) => (
@@ -160,7 +165,7 @@ export default function CustomerVideos() {
               key={item.id}
               initial={{
                 opacity: 0,
-                y: 28,
+                y: 25,
               }}
               whileInView={{
                 opacity: 1,
@@ -168,84 +173,46 @@ export default function CustomerVideos() {
               }}
               viewport={{
                 once: true,
-                amount: 0.25,
+                amount: 0.2,
               }}
               transition={{
                 duration: 0.55,
-                delay: reduce ? 0 : index * 0.09,
+                delay: reduce ? 0 : index * 0.08,
                 ease: "easeOut",
               }}
               whileHover={
                 reduce
                   ? {}
                   : {
-                      y: -8,
+                      y: -6,
                     }
               }
               className="
                 group
                 relative
                 overflow-hidden
-                rounded-[24px]
-                border-2
-                border-[#8F245F]
-                bg-gradient-to-br
-                from-white
-                via-[#FFF9FC]
-                to-brand-soft/50
-                shadow-[0_5px_18px_-8px_rgba(122,31,162,.20)]
+                rounded-[22px]
+                border
+                border-[#8F245F]/70
+                bg-white
+                shadow-[0_8px_25px_-12px_rgba(143,36,95,.28)]
                 transition-all
                 duration-300
                 hover:border-brand-pink
-                hover:shadow-[0_20px_40px_-20px_rgba(143,36,95,.45)]
-                sm:rounded-[28px]
+                hover:shadow-[0_18px_38px_-18px_rgba(143,36,95,.42)]
+                sm:rounded-[25px]
               "
             >
 
-              {/* Pink Corner Glow */}
-              <span
+              {/* ================= VIDEO ================= */}
+              <div
                 className="
-                  pointer-events-none
-                  absolute
-                  -right-16
-                  -top-16
-                  h-36
-                  w-36
-                  rounded-full
-                  bg-brand-pink/10
-                  opacity-40
-                  blur-3xl
-                  transition-all
-                  duration-500
-                  group-hover:opacity-80
+                  relative
+                  aspect-[9/13]
+                  overflow-hidden
+                  bg-black
                 "
-              />
-
-              {/* Hover Sheen */}
-              <span
-                className="
-                  pointer-events-none
-                  absolute
-                  -inset-x-10
-                  -top-24
-                  h-40
-                  rotate-12
-                  bg-gradient-to-r
-                  from-transparent
-                  via-white/70
-                  to-transparent
-                  opacity-0
-                  translate-x-[-60%]
-                  transition-all
-                  duration-700
-                  group-hover:translate-x-[60%]
-                  group-hover:opacity-100
-                "
-              />
-
-              {/* Video */}
-              <div className="relative aspect-[9/14] overflow-hidden bg-black">
-
+              >
                 <video
                   src={item.video}
                   controls
@@ -257,42 +224,86 @@ export default function CustomerVideos() {
                     object-cover
                     transition-transform
                     duration-500
-                    group-hover:scale-[1.02]
+                    group-hover:scale-[1.015]
                   "
                 />
 
-                {/* Play Decoration */}
-                <div className="pointer-events-none absolute left-4 top-4">
-                  <div
-                    className="
-                      flex
-                      h-11
-                      w-11
-                      items-center
-                      justify-center
-                      rounded-full
-                      bg-white/90
-                      text-brand-pink
-                      shadow-lg
-                      backdrop-blur
-                    "
-                  >
-                    <Play size={18} fill="currentColor" />
-                  </div>
+                {/* Top Gradient */}
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-x-0
+                    top-0
+                    h-20
+                    bg-gradient-to-b
+                    from-black/25
+                    to-transparent
+                  "
+                />
+
+                {/* Play Badge */}
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    left-3
+                    top-3
+                    flex
+                    h-9
+                    w-9
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-white/90
+                    text-brand-pink
+                    shadow-md
+                    backdrop-blur-sm
+                    sm:left-4
+                    sm:top-4
+                    sm:h-10
+                    sm:w-10
+                  "
+                >
+                  <Play
+                    size={16}
+                    fill="currentColor"
+                    className="ml-0.5"
+                  />
                 </div>
 
+                {/* Small Number */}
+                <span
+                  className="
+                    pointer-events-none
+                    absolute
+                    right-3
+                    top-3
+                    rounded-full
+                    bg-black/45
+                    px-2.5
+                    py-1
+                    text-[10px]
+                    font-semibold
+                    text-white
+                    backdrop-blur-sm
+                  "
+                >
+                  0{item.id}
+                </span>
               </div>
 
-              {/* Content */}
-              <div className="relative p-5 sm:p-6">
+              {/* ================= CONTENT ================= */}
+              <div className="relative px-4 py-4 sm:px-5 sm:py-5">
 
                 <h3
                   className="
                     font-display
-                    text-lg
+                    text-base
                     font-semibold
+                    leading-6
                     text-brand-ink
-                    sm:text-xl
+                    sm:text-lg
                   "
                 >
                   {item.title}
@@ -300,9 +311,9 @@ export default function CustomerVideos() {
 
                 <p
                   className="
-                    mt-2
-                    text-[13px]
-                    leading-6
+                    mt-1
+                    text-[12px]
+                    leading-5
                     text-brand-muted
                   "
                   style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -312,24 +323,25 @@ export default function CustomerVideos() {
 
               </div>
 
-              {/* Bottom Pink Line */}
+              {/* Bottom Accent */}
               <span
                 className="
                   absolute
                   bottom-0
                   left-0
                   h-[3px]
-                  w-0
+                  w-full
+                  origin-left
+                  scale-x-0
                   bg-gradient-to-r
                   from-brand-pink
                   via-brand-magenta
                   to-brand-purple
-                  transition-all
+                  transition-transform
                   duration-500
-                  group-hover:w-full
+                  group-hover:scale-x-100
                 "
               />
-
             </motion.div>
           ))}
         </div>
