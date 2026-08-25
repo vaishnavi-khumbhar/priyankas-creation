@@ -104,7 +104,7 @@ export default function Hero() {
         {/* ══════════ COPY ══════════ */}
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-gold ring-1 ring-brand-gold/40 backdrop-blur sm:text-[11px]">
-            <Sparkles size={12} /> Handmade in Pune
+            Handmade in Pune
           </span>
 
           <p className="mt-3 pb-1 font-script text-3xl leading-[1.35] text-brand-pink sm:text-5xl">
