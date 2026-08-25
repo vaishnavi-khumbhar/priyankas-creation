@@ -230,16 +230,17 @@ export const products = [
     ],
   },
 
-  /* ═══════ 5 · WEDDING & COUPLE COLLECTION ═══════ */
+    /* ═══════ 5 · WEDDING & COUPLE COLLECTION ═══════ */
+
   {
-    /* 13 × 13 in — ₹2799 → ₹2519 · 24 × 24 in — ₹4999 → ₹4499 (both incl. shipping) */
+    /* 13 × 13 in — ₹2799 → ₹2519 · 24 × 24 in — ₹4999 → ₹4499 */
     id: "gathbandhan-frame",
     name: "Gathbandhan Couple Frame",
     category: "Wedding & Couple Collection",
     price: 2519,
     oldPrice: 2799,
     image: weddingFrame,
-    tag: "Shipping included",
+    tag: "Shipping Included",
     sizes: ["13 × 13 in", "24 × 24 in"],
     description:
       "A personalized wedding frame for the couple — photo, names and wedding date, made to order.",
@@ -251,36 +252,31 @@ export const products = [
     ],
   },
 
-
   {
-  id: "gathbandhan-frame",
+    /* 13 × 13 in — ₹2200 · 10% OFF · Shipping Included */
+    id: "gathbandhan-frame-13x13",
+    name: "Gathbandhan Couple Frame – 13 × 13",
+    category: "Wedding & Couple Collection",
+    price: 2200,
+    oldPrice: 2445,
+    image: weddingFrame1,
+    tag: "Shipping Included",
+    sizes: ["13 × 13 in"],
+    description:
+      "A personalized Gathbandhan couple wedding frame featuring the couple's photo, names and wedding details, beautifully designed and made to order.",
+    benefits: [
+      "13 × 13 inch premium couple & wedding frame",
+      "Price: ₹2,200",
+      "10% OFF included",
+      "Shipping included in the price",
+      "Couple photo, names & wedding details personalized",
+      "Design approval before printing",
+    ],
+  },
 
-  name: "Gathbandhan Couple Frame",
+  /* ═══════ 6 · PREMIUM CUSTOMIZED FRAMES ═══════ */
+  /* Add products here */
 
-  category: "Wedding & Couple Collection",
-
-  price: 2200,
-
-  oldPrice: 2445,
-
-  image: weddingFrame1,
-
-  tag: "Shipping Included",
-
-  sizes: ["13 × 13 in"],
-
-  description:
-    "A personalized Gathbandhan couple wedding frame — featuring the couple's photo, names and wedding details, beautifully designed and made to order.",
-
-  benefits: [
-    "13 × 13 inch premium couple & wedding frame",
-    "Price: ₹2,200",
-    "10% OFF included",
-    "Shipping included in the price",
-    "Couple photo, names & wedding details personalized",
-    "Design approval before printing",
-  ],
-},
-  /* ═══════ 3 · PREMIUM CUSTOMIZED FRAMES — add products here ═══════ */
-  /* ═══════ 6 · FESTIVE & HOME DÉCOR — add products here ═══════ */
+  /* ═══════ 7 · FESTIVE & HOME DÉCOR ═══════ */
+  /* Add products here */
 ];
