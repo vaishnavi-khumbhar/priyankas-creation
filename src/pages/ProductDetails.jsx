@@ -16,11 +16,18 @@ import {
   CheckCircle2,
   PackageCheck,
   TicketPercent,
+  Ruler,
+  Image as ImageIcon,
+  MessageCircle,
 } from "lucide-react";
 
 import { products } from "../data/products";
 import { discountOf, WA_NUMBER } from "../components/ProductCard";
 import RelatedProducts from "../components/RelatedProducts";
+
+/* =========================================================
+   WHATSAPP ICON
+========================================================= */
 
 const WhatsAppIcon = ({ size = 18, className = "" }) => (
   <svg
@@ -31,41 +38,51 @@ const WhatsAppIcon = ({ size = 18, className = "" }) => (
     aria-hidden="true"
     className={className}
   >
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.83 9.83 0 0 1 2.892 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463.104 0 5.359.101 11.944c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.652a11.9 11.9 0 0 0 5.71 1.454h.005c6.585 0 11.945-5.36 11.948-11.945a11.9 11.9 0 0 0-3.477-8.408" />
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.198-.497.099-.198.05-.371.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.83 9.83 0 0 1 2.892 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463.104 0 5.359.101 11.944c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.652a11.9 11.9 0 0 0 5.71 1.454h.005c6.585 0 11.945-5.36 11.948-11.945a11.9 11.9 0 0 0-3.477-8.408" />
   </svg>
 );
 
-/* How the order works */
+/* =========================================================
+   HOW ORDER WORKS
+========================================================= */
+
 const steps = [
   {
     Icon: Palette,
     title: "Choose a theme",
-    text: "Pick the cartoon, colour or style your child loves.",
+    text: "Pick the cartoon, colour or style you love.",
   },
   {
     Icon: Send,
     title: "Share the details",
-    text: "Send the name, a clear photo and your preferences on WhatsApp.",
+    text: "Send the name, photo and your customization details on WhatsApp.",
   },
   {
     Icon: CheckCircle2,
     title: "Approve the design",
-    text: "We show you the final design before anything is made.",
+    text: "We share a design preview before anything is made.",
   },
   {
     Icon: PackageCheck,
-    title: "Receive the board",
-    text: "Delivered ready to use — waterproof and built to last.",
+    title: "Receive your product",
+    text: "Your customized product is prepared and delivered safely.",
   },
 ];
 
-/* First Order Offer */
+/* =========================================================
+   FIRST ORDER OFFER
+========================================================= */
+
 const firstOrderOffer = {
   Icon: TicketPercent,
   text: "Flat ₹100 OFF on your first order — code FIRST100",
   accent: "text-amber-300",
   bg: "bg-amber-300/15",
 };
+
+/* =========================================================
+   STARS
+========================================================= */
 
 export const Stars = ({ value = 0, size = 15 }) => (
   <span className="flex items-center gap-0.5">
@@ -98,11 +115,15 @@ export const Stars = ({ value = 0, size = 15 }) => (
   </span>
 );
 
+/* =========================================================
+   PRODUCT DETAILS
+========================================================= */
+
 export default function ProductDetails() {
   const { id } = useParams();
 
   const product = products.find(
-    (p) => String(p.id) === String(id)
+    (p) => String(p.id).trim() === String(id).trim()
   );
 
   const [qty, setQty] = useState(1);
@@ -170,16 +191,23 @@ export default function ProductDetails() {
   const sizes = product.sizes ?? [];
   const benefits = product.benefits ?? [];
 
-  /* WhatsApp order message */
+  /* =========================================================
+     WHATSAPP ORDER MESSAGE
+  ========================================================= */
+
   const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
     `Hi Priyanka's Creation! I want to order:
 
-• Product: ${product.name}${size ? `\n• Size: ${size}` : ""}
-• Quantity: ${qty}
+• Product: ${product.name}
+${size ? `• Size: ${size}\n` : ""}• Quantity: ${qty}
 • Price: ₹${product.price} each
 
 Please guide me with the customization details.`
   )}`;
+
+  /* =========================================================
+     SHARE
+  ========================================================= */
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -191,10 +219,11 @@ Please guide me with the customization details.`
           url,
         });
       } catch {
-        // dismissed
+        // User cancelled
       }
     } else {
       await navigator.clipboard?.writeText(url);
+
       setCopied(true);
 
       setTimeout(() => {
@@ -202,6 +231,10 @@ Please guide me with the customization details.`
       }, 1800);
     }
   };
+
+  /* =========================================================
+     ZOOM
+  ========================================================= */
 
   const onMove = (e) => {
     const r = imgBox.current?.getBoundingClientRect();
@@ -226,7 +259,10 @@ Please guide me with the customization details.`
       <section className="bg-gradient-to-b from-brand-soft/70 to-white py-5 lg:py-10">
         <div className="container-page">
 
-          {/* Breadcrumb */}
+          {/* =================================================
+              BREADCRUMB
+          ================================================= */}
+
           <nav className="flex items-center gap-1 text-[13px] text-brand-muted sm:gap-1.5 sm:text-sm">
             <Link
               to="/"
@@ -235,7 +271,7 @@ Please guide me with the customization details.`
               Home
             </Link>
 
-            <ChevronRight size={13} className="shrink-0" />
+            <ChevronRight size={13} />
 
             <Link
               to="/products"
@@ -244,7 +280,7 @@ Please guide me with the customization details.`
               Products
             </Link>
 
-            <ChevronRight size={13} className="shrink-0" />
+            <ChevronRight size={13} />
 
             <span className="truncate font-semibold text-brand-ink">
               {product.name}
@@ -253,21 +289,30 @@ Please guide me with the customization details.`
 
           <div className="mt-4 grid gap-6 sm:mt-6 lg:grid-cols-2 lg:gap-12">
 
-            {/* LEFT */}
+            {/* =================================================
+                LEFT SIDE
+            ================================================= */}
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
+
+              {/* PRODUCT IMAGE CARD */}
+
               <div className="relative rounded-[20px] bg-gradient-to-br from-brand-soft via-white to-purple-50 p-3 ring-1 ring-brand-gold/30 sm:rounded-[28px] sm:p-5">
 
-                {/* Product Tags */}
+                {/* Tags */}
+
                 {product.tag && (
                   <div className="absolute left-3 top-3 z-20 flex flex-col gap-1 sm:left-5 sm:top-5">
 
-                    <span className="w-fit rounded-full bg-brand-magenta px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow sm:px-3 sm:text-[10px]">
-                      {off}% OFF
-                    </span>
+                    {off > 0 && (
+                      <span className="w-fit rounded-full bg-brand-magenta px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow sm:px-3 sm:text-[10px]">
+                        {off}% OFF
+                      </span>
+                    )}
 
                     <span className="w-fit rounded-full bg-emerald-500 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow sm:px-3 sm:text-[10px]">
                       Shipping Included
@@ -277,7 +322,8 @@ Please guide me with the customization details.`
                 )}
 
                 {/* Share */}
-                <div className="absolute right-3 top-3 z-20 flex flex-col gap-1.5 sm:right-5 sm:top-5 sm:gap-2">
+
+                <div className="absolute right-3 top-3 z-20 sm:right-5 sm:top-5">
                   <button
                     onClick={handleShare}
                     aria-label="Share"
@@ -287,7 +333,8 @@ Please guide me with the customization details.`
                   </button>
                 </div>
 
-                {/* Product Image */}
+                {/* Main Product Image */}
+
                 <button
                   ref={imgBox}
                   onClick={() => setLightbox(true)}
@@ -324,6 +371,7 @@ Please guide me with the customization details.`
                 </button>
 
                 {/* Zoom Lens */}
+
                 {lens.show && (
                   <div
                     className="pointer-events-none absolute left-full top-0 z-30 ml-4 hidden aspect-square w-[380px] rounded-[20px] border border-pink-100 bg-white bg-no-repeat shadow-2xl xl:block"
@@ -336,7 +384,72 @@ Please guide me with the customization details.`
                 )}
               </div>
 
-              {/* How Order Works */}
+              {/* =================================================
+                  DIMENSIONS IMAGE
+              ================================================= */}
+
+              {product.detailsImage && (
+                <div className="mt-5 overflow-hidden rounded-[20px] border border-pink-100 bg-white p-3 shadow-sm sm:rounded-[24px] sm:p-4">
+
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand-magenta">
+                      <Ruler size={16} />
+                    </span>
+
+                    <div>
+                      <h2 className="text-[15px] font-bold text-brand-ink sm:text-base">
+                        Dimensions & Product Details
+                      </h2>
+
+                      <p className="text-[11px] text-brand-muted sm:text-xs">
+                        Product size and important details
+                      </p>
+                    </div>
+                  </div>
+
+                  <img
+                    src={product.detailsImage}
+                    alt={`${product.name} dimensions and product details`}
+                    className="h-auto w-full rounded-[14px] object-contain"
+                  />
+                </div>
+              )}
+
+              {/* =================================================
+                  CUSTOMIZATION INSTRUCTIONS IMAGE
+              ================================================= */}
+
+              {product.instructionImage && (
+                <div className="mt-4 overflow-hidden rounded-[20px] border border-pink-100 bg-white p-3 shadow-sm sm:rounded-[24px] sm:p-4">
+
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand-purple">
+                      <ImageIcon size={16} />
+                    </span>
+
+                    <div>
+                      <h2 className="text-[15px] font-bold text-brand-ink sm:text-base">
+                        How to Customize
+                      </h2>
+
+                      <p className="text-[11px] text-brand-muted sm:text-xs">
+                        Follow these simple customization steps
+                      </p>
+                    </div>
+                  </div>
+
+                  <img
+                    src={product.instructionImage}
+                    alt={`${product.name} customization instructions`}
+                    className="h-auto w-full rounded-[14px] object-contain"
+                  />
+                </div>
+              )}
+
+              {/* =================================================
+                  HOW ORDER WORKS
+              ================================================= */}
+
               <div className="mt-4 rounded-[20px] border border-pink-100 bg-white p-4 sm:mt-5 sm:rounded-[24px] sm:p-5">
 
                 <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-magenta sm:text-[13px]">
@@ -344,6 +457,7 @@ Please guide me with the customization details.`
                 </p>
 
                 <ol className="mt-3.5 grid gap-3.5">
+
                   {steps.map(({ Icon, title, text }, i) => (
                     <li
                       key={title}
@@ -363,6 +477,7 @@ Please guide me with the customization details.`
                       </span>
 
                       <span className="min-w-0 pt-0.5">
+
                         <span className="block text-[14px] font-bold leading-tight text-brand-ink sm:text-[15px]">
                           {title}
                         </span>
@@ -370,14 +485,19 @@ Please guide me with the customization details.`
                         <span className="mt-0.5 block text-[13px] leading-[1.55] text-brand-muted sm:text-[14px]">
                           {text}
                         </span>
+
                       </span>
                     </li>
                   ))}
+
                 </ol>
               </div>
             </motion.div>
 
-            {/* RIGHT */}
+            {/* =================================================
+                RIGHT SIDE
+            ================================================= */}
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -387,15 +507,20 @@ Please guide me with the customization details.`
               }}
             >
 
+              {/* Category */}
+
               <span className="inline-block rounded-full bg-brand-soft px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-brand-gold sm:px-3 sm:tracking-[0.18em]">
                 {product.category}
               </span>
+
+              {/* Product Name */}
 
               <h1 className="mt-2.5 font-display text-[28px] font-bold leading-[1.2] text-brand-ink sm:mt-3 sm:text-4xl">
                 {product.name}
               </h1>
 
               {/* Rating */}
+
               {product.rating > 0 && (
                 <div className="mt-2 flex items-center gap-2">
 
@@ -413,7 +538,10 @@ Please guide me with the customization details.`
                 </div>
               )}
 
-              {/* Price */}
+              {/* =================================================
+                  PRICE
+              ================================================= */}
+
               <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-4 sm:gap-2.5">
 
                 <span className="font-display text-[32px] font-bold text-green-600 sm:text-4xl">
@@ -452,6 +580,7 @@ Please guide me with the customization details.`
               </div>
 
               {/* First Order Offer */}
+
               <div
                 className={`mt-4 flex items-center gap-2.5 rounded-xl border border-amber-200/50 ${firstOrderOffer.bg} px-3 py-2.5`}
               >
@@ -472,23 +601,88 @@ Please guide me with the customization details.`
               </div>
 
               {/* Description */}
+
               <p className="mt-3 text-[15px] leading-[1.7] text-brand-muted sm:mt-4 sm:text-base sm:leading-7">
                 {product.description}
               </p>
 
+              {/* =================================================
+                  PRODUCT INFORMATION
+              ================================================= */}
+
+              {product.detailSections?.length > 0 && (
+                <div className="mt-5 rounded-[20px] border border-pink-100 bg-white p-4 shadow-sm sm:mt-6 sm:rounded-[24px] sm:p-5">
+
+                  <div className="flex items-center gap-2">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand-magenta">
+                      <Ruler size={17} />
+                    </span>
+
+                    <div>
+                      <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-magenta sm:text-[13px]">
+                        Product Information
+                      </p>
+
+                      <p className="text-[11px] text-brand-muted sm:text-xs">
+                        Dimensions, quality & customization details
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 space-y-4">
+
+                    {product.detailSections.map((section) => (
+                      <div
+                        key={section.title}
+                        className="rounded-xl bg-brand-soft/50 p-3.5 sm:p-4"
+                      >
+
+                        <h3 className="text-[14px] font-bold text-brand-ink sm:text-[15px]">
+                          {section.title}
+                        </h3>
+
+                        <ul className="mt-2.5 space-y-2">
+
+                          {section.items.map((item) => (
+                            <li
+                              key={item}
+                              className="flex gap-2 text-[13px] leading-[1.6] text-brand-muted sm:text-[14px]"
+                            >
+                              <Check
+                                size={15}
+                                className="mt-0.5 shrink-0 text-green-600"
+                              />
+
+                              <span>{item}</span>
+                            </li>
+                          ))}
+
+                        </ul>
+                      </div>
+                    ))}
+
+                  </div>
+                </div>
+              )}
+
               <div className="my-5 h-px bg-pink-100 sm:my-6" />
 
-              {/* Size + Quantity */}
+              {/* =================================================
+                  SIZE + QUANTITY
+              ================================================= */}
+
               <div className="flex flex-wrap gap-6 sm:gap-8">
 
-                {/* Size */}
+                {/* SIZE */}
+
                 {sizes.length > 0 && (
                   <div>
                     <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
                       Size
                     </p>
 
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-wrap gap-2">
+
                       {sizes.map((s) => (
                         <button
                           key={s}
@@ -502,11 +696,13 @@ Please guide me with the customization details.`
                           {s}
                         </button>
                       ))}
+
                     </div>
                   </div>
                 )}
 
-                {/* Quantity */}
+                {/* QUANTITY */}
+
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
                     Quantity
@@ -542,8 +738,12 @@ Please guide me with the customization details.`
                 </div>
               </div>
 
-              {/* WhatsApp Order */}
+              {/* =================================================
+                  WHATSAPP
+              ================================================= */}
+
               <div className="mt-5 sm:mt-6">
+
                 <a
                   href={waLink}
                   target="_blank"
@@ -553,17 +753,22 @@ Please guide me with the customization details.`
                   <WhatsAppIcon size={18} />
                   Order via WhatsApp
                 </a>
+
               </div>
 
-              {/* Benefits */}
+              {/* =================================================
+                  BENEFITS
+              ================================================= */}
+
               {benefits.length > 0 && (
                 <div className="mt-5 rounded-2xl border border-pink-100 bg-brand-soft/50 p-4 sm:mt-6 sm:p-5">
 
                   <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-magenta sm:text-[13px]">
-                    Why parents choose this
+                    Why customers choose this
                   </p>
 
                   <ul className="mt-3 space-y-2">
+
                     {benefits.map((b) => (
                       <li
                         key={b}
@@ -577,31 +782,47 @@ Please guide me with the customization details.`
                         {b}
                       </li>
                     ))}
-                  </ul>
 
+                  </ul>
                 </div>
               )}
 
-              <p className="mt-4 text-[14px] leading-[1.7] text-brand-muted sm:text-[15px]">
-                To personalise this product, share your child&apos;s
-                name, a clear photograph and your preferred theme on
-                WhatsApp. We share the design for your approval before
-                making it.
-              </p>
+              {/* Customization CTA */}
+
+              <div className="mt-4 flex gap-3 rounded-2xl border border-pink-100 bg-gradient-to-r from-brand-soft to-purple-50 p-4">
+
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white text-brand-magenta shadow-sm">
+                  <MessageCircle size={17} />
+                </span>
+
+                <p className="text-[13px] leading-[1.65] text-brand-muted sm:text-[14px]">
+                  To personalise this product, share your photo, name,
+                  preferred theme and any special message on WhatsApp.
+                  We share the design preview with you before making it.
+                </p>
+
+              </div>
 
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Related Products */}
+      {/* =========================================================
+          RELATED PRODUCTS
+      ========================================================= */}
+
       <RelatedProducts
         currentId={product.id}
         category={product.category}
       />
 
-      {/* Full-screen Zoom */}
+      {/* =========================================================
+          FULL SCREEN ZOOM
+      ========================================================= */}
+
       <AnimatePresence>
+
         {lightbox && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -647,6 +868,7 @@ Please guide me with the customization details.`
 
           </motion.div>
         )}
+
       </AnimatePresence>
     </>
   );

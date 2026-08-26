@@ -5,14 +5,60 @@ import examBoardName   from "../assets/productes/exam-board-name.jpg";
 import examBoardPhoto  from "../assets/productes/exam-board-photo.jpg";
 import cartoonBoard    from "../assets/productes/cartoon-board.jpg";
 import kitchenFrame    from "../assets/productes/kitchen-frame.jpg";
-import photoFrame      from "../assets/productes/photo-frame.jpg";
+import Exam_board      from "../assets/productes/Exam_board.jpg";
+import Exam_board1      from "../assets/productes/exam-board-name1.jpg";
+import Exam_board3     from "../assets/productes/birthday_board.jpg";
+import Exam_board2     from "../assets/productes/exam-board-name2.jpg";
+import Exam_board4     from "../assets/productes/exam_board1.jpg";
+import Exam_board5     from "../assets/productes/exam-board4.jpg";
+import Exam_board7     from "../assets/productes/exam-board7.jpg";
+import Exam_board8     from "../assets/productes/exam-board8.jpg";
+import Exam_board9     from "../assets/productes/exam-board9.jpg";
+import Exam_board10     from "../assets/productes/exam-board10.jpg";
+import Exam_board11     from "../assets/productes/exam-board11.jpg";
+import Exam_board12     from "../assets/productes/exam-board12.jpg";
+import Exam_board13     from "../assets/productes/exam-board13.jpg";
+import Exam_board14     from "../assets/productes/exam-board14.jpg";
+import Exam_board15     from "../assets/productes/exam-board15.jpg";
+import Exam_board16     from "../assets/productes/exam-board16.jpg";
+import Exam_board17     from "../assets/productes/exam-board17.jpg";
+import Exam_board18     from "../assets/productes/exam-board18.jpg";
+import Exam_board19     from "../assets/productes/exam-board19.jpg";
+import Exam_board20     from "../assets/productes/exam-board20.jpg";
+import Exam_board21     from "../assets/productes/exam-board21.jpg";
+import Exam_board22     from "../assets/productes/exam-board22.jpg";
+import Exam_board23     from "../assets/productes/exam-board23.jpg";
+import Exam_board24     from "../assets/productes/exam-board24.jpg";
+import Exam_board25     from "../assets/productes/exam-board25.jpg";
+import Exam_board26     from "../assets/productes/exam-board26.jpg";
+import Exam_board27     from "../assets/productes/exam-board27.jpg";
+import Exam_board28     from "../assets/productes/exam-board28.jpg";
+import Exam_board29     from "../assets/productes/exam-board29.jpg";
+import Exam_board30     from "../assets/productes/exam-board30.jpg";
+import Exam_board31     from "../assets/productes/exam-board31.jpg";
+import Exam_board32     from "../assets/productes/exam-board32.jpg";
+import Exam_board33     from "../assets/productes/exam-board33.jpg";
+import Exam_board34     from "../assets/productes/exam-board34.jpg";
+import Exam_board35     from "../assets/productes/exam-board35.jpg";
+
+
+
+
 
 import writingBoard    from "../assets/productes/writing-board.jpg";
 import birthdayFrame   from "../assets/productes/birthday-theme-frame.jpg";
 import kidsPhotoFrame  from "../assets/productes/kids-photo-frame.jpg";
+import kidsPhotoFrame2  from "../assets/productes/kids-photo-frame2.jpg";
+import kidsPhotoFrame3  from "../assets/productes/kids-photo-frame3.jpg";
+import kidsPhotoFrame4  from "../assets/productes/kids-photo-frame4.jpg";
+import kidsPhotoFrame5  from "../assets/productes/kids-photo-frame5.jpg";
+
+
 import kitchenFrame1   from "../assets/productes/kitchen-frame-1.jpg";
 import kitchenFrame2   from "../assets/productes/kitchen-frame-2.jpg";
 import kitchenFrame3   from "../assets/productes/kitchen-frame-3.jpg";
+
+
 import weddingFrame  from "../assets/productes/wedding-gift.jpg";
 import weddingFrame1  from "../assets/productes/wedding-gift1.jpg";
 
@@ -44,6 +90,649 @@ export const products = [
       "Design shared for your approval before making",
     ],
   },
+{
+    id: " Exam_board1",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board1,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+{
+    id: " Exam_board2",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board2,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+  {
+    id: " Exam_board4",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board4,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+  {
+    id: " Exam_board5",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board5,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+{
+    id: " Exam_board7",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board7,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+  {
+    id: " Exam_board8",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board8,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board9",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board9,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+  {
+    id: " Exam_board10",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board10,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+ {
+    id: " Exam_board11",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board11,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board12",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board12,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+ {
+    id: " Exam_board13",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board13,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board14",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board14,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board15",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board15,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board16",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board16,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board17",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board17,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board18",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board18,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board19",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board19,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board20",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board20,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board21",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board21,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board22",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board22,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board23",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board23,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board24",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board24,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board25",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board25,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board26",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board26,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board27",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board27,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board28",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board28,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board29",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board29,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board30",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board30,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+{
+    id: " Exam_board31",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board31,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+{
+    id: " Exam_board32",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board32,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+  {
+    id: " Exam_board33",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board33,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+   {
+    id: " Exam_board34",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board34,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+ {
+    id: " Exam_board35",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board35,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
+    benefits: [
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
+    ],
+  },
+
+
+
+
+
+
+
+
+
   {
     id: "board-photo",
     name: "Name + Photo Exam Board",
@@ -99,15 +788,13 @@ export const products = [
       "Design shared for your approval before making",
     ],
   },
-
-  /* ═══════ 2 · CUSTOMIZED PHOTO FRAMES ═══════ */
-  {
+{
     id: "photo-frame",
-    name: "Customized Photo Frame",
-    category: "Customized Photo Frames",
+    name: "Personalized Kids Writing Board",
+    category: "Writing & Exam Boards",
     price: 599,
     oldPrice: 799,
-    image: photoFrame,
+    image: Exam_board,
     tag: "Gift Pick",
     rating: 4.9,
     reviews: 28,
@@ -120,42 +807,165 @@ export const products = [
       "Design approval before printing",
     ],
   },
-  {
-    /* 13 × 13 in — ₹1800, 10% off */
-    id: "birthday-theme-frame",
-    name: "Birthday Photo Frame",
-    category: "Customized Photo Frames",
-    price: 1620,
-    oldPrice: 1800,
-    image: birthdayFrame,
-    tag: "Birthday",
-    sizes: ["13 × 13 in"],
-    description: "A birthday-themed frame built around your favourite photo, name and message.",
+{
+    id: " Exam_board3",
+    name: "Customized Name Exam Board",
+    category: "Writing & Exam Boards",
+    price: 599,
+    oldPrice: 449,
+    image: Exam_board3,
+    tag: "Bestseller",
+    rating: 4.8,
+    reviews: 42,
+    sizes: ["A4", "A3"],
+    description: "A colourful exam board personalized with your child's name.",
     benefits: [
-      "Choose the birthday theme and colours",
-      "Photo, name and age or message included",
-      "13 × 13 inch — a strong table or wall piece",
-      "Design approval before printing",
+      "Child's name printed in a clear, child-friendly font",
+      "Choose any colour and background design",
+      "100% waterproof, wipe-clean surface",
+      "Design shared for your approval before making",
     ],
   },
-  {
-    /* 24 × 24 in — ₹4999, 10% off */
-    id: "kids-photo-frame",
-    name: "Kids Photo Frame",
-    category: "Customized Photo Frames",
-    price: 4499,
-    oldPrice: 4999,
-    image: kidsPhotoFrame,
-    tag: "Premium",
-    sizes: ["24 × 24 in"],
-    description: "A large statement frame for your child's best photograph, made to order.",
-    benefits: [
-      "24 × 24 inch — a centrepiece for any wall",
-      "Photo, name and theme of your choice",
-      "Premium finish, built to last",
-      "Design approval before printing",
-    ],
-  },
+
+
+
+
+
+
+
+
+
+
+  /* ═══════ 2 · CUSTOMIZED PHOTO FRAMES ═══════ */
+  
+ {
+  /* 13 × 13 in — ₹1800, 10% off */
+  id: "birthday-theme-frame",
+  name: "Birthday Photo Frame",
+  category: "Customized Photo Frames",
+  price: 1620,
+  oldPrice: 1800,
+  image: birthdayFrame,
+  tag: "Birthday",
+  sizes: ["13 × 13 in"],
+  description:
+    "A birthday-themed frame built around your favourite photo, name and message.",
+  benefits: [
+    "Choose the birthday theme and colours",
+    "Photo, name and age or message included",
+    "13 × 13 inch — a strong table or wall piece",
+    "Design approval before printing",
+  ],
+},
+
+{
+  /* Kids Photo Frame - Image 1 */
+  id: "kids-photo-frame",
+  name: "Kids Photo Frame",
+  category: "Customized Photo Frames",
+  price: 4499,
+  oldPrice: 4999,
+  image: kidsPhotoFrame,
+  tag: "Premium",
+  sizes: ["24 × 24 in"],
+  description:
+    "A large statement frame for your child's best photograph, made to order.",
+  benefits: [
+    "24 × 24 inch — a centrepiece for any wall",
+    "Photo, name and theme of your choice",
+    "Premium finish, built to last",
+    "Design approval before printing",
+  ],
+},
+
+{
+  /* Kids Photo Frame - Image 2 */
+  id: "kids-photo-frame-2",
+  name: "Kids Photo Frame",
+  category: "Customized Photo Frames",
+  price: 4499,
+  oldPrice: 4999,
+  image: kidsPhotoFrame2,
+  tag: "Premium",
+  sizes: ["24 × 24 in"],
+  description:
+    "A large statement frame for your child's best photograph, made to order.",
+  benefits: [
+    "24 × 24 inch — a centrepiece for any wall",
+    "Photo, name and theme of your choice",
+    "Premium finish, built to last",
+    "Design approval before printing",
+  ],
+},
+
+{
+  /* Kids Photo Frame - Image 3 */
+  id: "kids-photo-frame-3",
+  name: "Kids Photo Frame",
+  category: "Customized Photo Frames",
+  price: 2880,
+  oldPrice: 3200,
+  image: kidsPhotoFrame3,
+  tag: "Premium",
+  sizes: ["18 × 16 in"],
+  description:
+    "A beautifully customized kids photo frame, made to showcase your child's favourite memories.",
+  benefits: [
+    "18 × 16 inch — perfect for a beautiful wall display",
+    "Photo, name and theme of your choice",
+    "Premium finish, built to last",
+    "Price includes shipping",
+    "10% off on the original price",
+    "Design approval before printing",
+  ],
+},
+{
+  /* Kids Photo Frame - Image 4 */
+  id: "kids-photo-frame-4",
+  name: "Kids Photo Frame",
+  category: "Customized Photo Frames",
+  price: 2880,
+  oldPrice: 3200,
+  image: kidsPhotoFrame4,
+  tag: "Premium",
+  sizes: ["18 × 16 in"],
+  description:
+    "A beautifully customized kids photo frame, made to showcase your child's favourite memories.",
+  benefits: [
+    "18 × 16 inch — perfect for a beautiful wall display",
+    "Photo, name and theme of your choice",
+    "Premium finish, built to last",
+    "Price includes shipping",
+    "10% off on the original price",
+    "Design approval before printing",
+  ],
+},
+{
+  /* Kids Photo Frame - Image 5 */
+  id: "kids-photo-frame-5",
+  name: "Kids Photo Frame",
+  category: "Customized Photo Frames",
+  price: 4499,
+  oldPrice: 4999,
+  image: kidsPhotoFrame5,
+  tag: "Premium",
+  sizes: ["24 × 24 in"],
+  description:
+    "A large statement frame for your child's best photograph, made to order.",
+  benefits: [
+    "24 × 24 inch — a centrepiece for any wall",
+    "Photo, name and theme of your choice",
+    "Premium finish, built to last",
+    "Design approval before printing",
+  ],
+},
+
+
+
+
+
+
+
 
   /* ═══════ 4 · KITCHEN COLLECTION ═══════
      ⚠️ Rename these to match the real designs. */
@@ -229,6 +1039,15 @@ export const products = [
       "Design approval before printing",
     ],
   },
+
+
+
+
+
+
+
+
+
 
     /* ═══════ 5 · WEDDING & COUPLE COLLECTION ═══════ */
 
