@@ -81,10 +81,6 @@ import bikeDayDim from "../assets/products/board-bike-day-dim.jpg";
 import anandiDim from "../assets/products/board-anandi-dim.jpg";
 import bikeSunsetDim from "../assets/products/board-bike-sunset-dim.jpg";
 import praptiRakhiDim from "../assets/products/board-prapti-rakhi-dim.jpg";
-import aaravCartoonDim from "../assets/products/board-aarav-cartoon-dim.jpg";
-import ayraPrincessDim from "../assets/products/board-ayra-princess-dim.jpg";
-import birthdayBoyDim from "../assets/products/board-birthday-boy-dim.jpg";
-import marathiGirlDim from "../assets/products/board-marathi-girl-dim.jpg";
 
 /* -------------------- FRAMES & OTHERS -------------------- */
 import kidsPhotoFrame  from "../assets/products/kids-photo-frame.jpg";
@@ -95,7 +91,6 @@ import kidsPhotoFrame5 from "../assets/products/kids-photo-frame5.jpg";
 /* photo-frame dimension sheets — each frame has its own */
 import kidsPhotoFrameDim  from "../assets/products/kids-photo-frame-dim.jpg";   /* baby, 24×24 */
 import kidsPhotoFrame2Dim from "../assets/products/kids-photo-frame2-dim.jpg";  /* Ashvika    */
-import kidsPhotoFrame3Dim from "../assets/products/kids-photo-frame3-dim.jpg";  /* Hadhira, 18×16 */
 import kidsPhotoFrame4Dim from "../assets/products/kids-photo-frame4-dim.jpg";  /* Rudra 18×16 */
 import kidsPhotoFrame5Dim from "../assets/products/kids-photo-frame5-dim.jpg";  /* Krushnaraj 24×24 */
 
@@ -249,11 +244,11 @@ const BOARDS = [
   ["bike-day", "Bike Theme", bikeDay, bikeDayDim],
   ["anandi", "Anandi", anandi, anandiDim],
   ["bike-sunset", "Bike Sunset", bikeSunset, bikeSunsetDim],
-  ["aarav-cartoon", "Aarav – Cartoon", aaravCartoon, aaravCartoonDim],
-  ["ayra-princess", "Ayra – Little Princess", ayraPrincess, ayraPrincessDim],
+  ["aarav-cartoon", "Aarav – Cartoon", aaravCartoon, null],   /* no dimension sheet yet */
+  ["ayra-princess", "Ayra – Little Princess", ayraPrincess, null],   /* no dimension sheet yet */
   ["prapti-rakhi", "Prapti – Rakhi", praptiRakhi, praptiRakhiDim],
-  ["birthday-boy", "Birthday Theme", birthdayBoy, birthdayBoyDim],
-  ["marathi-girl", "Marathi Motivation", marathiGirl, marathiGirlDim],
+  ["birthday-boy", "Birthday Theme", birthdayBoy, null],   /* no dimension sheet yet */
+  ["marathi-girl", "Marathi Motivation", marathiGirl, null],   /* no dimension sheet yet */
 ];
 
 const examBoards = BOARDS.map(([slug, title, image, dimensionsImage]) => ({
@@ -374,7 +369,7 @@ export const products = [
       "Price includes shipping",
       "Design approval before printing",
     ],
-    ...photoFrameDetails(kidsPhotoFrame3Dim, [
+    ...photoFrameDetails(null, [
       "Size: 18 × 16 Inch",
       "Premium customized kids photo frame",
       "Price includes shipping",

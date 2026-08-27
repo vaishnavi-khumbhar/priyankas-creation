@@ -136,7 +136,18 @@ export default function ProductDetails() {
     y: 50,
   });
 
-  const [lightbox, setLightbox] = useState(false);
+  /*
+    Holds the URL of whichever image is currently open in the
+    fullscreen zoom viewer (main photo, dimensions image, or
+    instructions image). `null` = closed.
+  */
+  const [lightboxSrc, setLightboxSrc] = useState(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
+
+  const openLightbox = (src, alt) => {
+    setLightboxSrc(src);
+    setLightboxAlt(alt);
+  };
 
   const imgBox = useRef(null);
 
@@ -145,16 +156,16 @@ export default function ProductDetails() {
 
     setQty(1);
     setCopied(false);
-    setLightbox(false);
+    setLightboxSrc(null);
     setSize(product?.sizes?.[0] ?? null);
   }, [id, product]);
 
   useEffect(() => {
-    document.body.style.overflow = lightbox ? "hidden" : "";
+    document.body.style.overflow = lightboxSrc ? "hidden" : "";
 
     const onKey = (e) => {
       if (e.key === "Escape") {
-        setLightbox(false);
+        setLightboxSrc(null);
       }
     };
 
@@ -164,7 +175,7 @@ export default function ProductDetails() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [lightbox]);
+  }, [lightboxSrc]);
 
   if (!product) {
     return (
@@ -190,6 +201,44 @@ export default function ProductDetails() {
   const off = discountOf(product);
   const sizes = product.sizes ?? [];
   const benefits = product.benefits ?? [];
+
+  /* =========================================================
+     PRODUCT IMAGES
+     (products.js stores these as `dimensionsImage` /
+     `instructionImage`, NOT `detailsImage`)
+  ========================================================= */
+
+  const dimensionsImage = product.dimensionsImage;
+  const instructionImage = product.instructionImage;
+
+  /* =========================================================
+     PRODUCT INFORMATION SECTIONS
+     Built dynamically from whatever fields exist on this
+     product (dimensions, features, perfectFor, makingDelivery)
+     instead of a single hard-coded `detailSections` field.
+  ========================================================= */
+
+  const detailSections = [
+    product.dimensions?.length && {
+      title: product.dimensionsTitle || "Dimensions & Details",
+      items: product.dimensions,
+    },
+    product.features?.length && {
+      title: product.featuresTitle || "Features",
+      items: product.features,
+    },
+    product.perfectFor?.length && {
+      title: product.perfectForTitle || "Perfect For",
+      items: product.perfectFor,
+    },
+    product.makingDelivery?.length && {
+      title: "Making & Delivery",
+      items: product.makingDelivery,
+    },
+  ].filter(Boolean);
+
+  const contactNote = product.contactNote;
+  const contactTitle = product.contactTitle || "For Customization & Orders";
 
   /* =========================================================
      WHATSAPP ORDER MESSAGE
@@ -337,7 +386,7 @@ Please guide me with the customization details.`
 
                 <button
                   ref={imgBox}
-                  onClick={() => setLightbox(true)}
+                  onClick={() => openLightbox(product.image, product.name)}
                   onMouseMove={onMove}
                   onMouseLeave={() =>
                     setLens((l) => ({
@@ -366,7 +415,7 @@ Please guide me with the customization details.`
 
                   <span className="absolute bottom-2.5 right-2.5 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-brand-ink shadow sm:bottom-3 sm:right-3 sm:px-2.5 sm:py-1">
                     <ZoomIn size={11} />
-                    Tap to zoom
+                     Show Image
                   </span>
                 </button>
 
@@ -386,63 +435,101 @@ Please guide me with the customization details.`
 
               {/* =================================================
                   DIMENSIONS IMAGE
+                  (shown right below the main product image)
               ================================================= */}
 
-              {product.detailsImage && (
-                <div className="mt-5 overflow-hidden rounded-[20px] border border-pink-100 bg-white p-3 shadow-sm sm:rounded-[24px] sm:p-4">
+              {dimensionsImage && (
+                <div className="mt-4 overflow-hidden rounded-2xl border border-pink-100 bg-white p-2.5 shadow-sm transition-shadow hover:shadow-md sm:mt-5 sm:rounded-[22px] sm:p-3.5">
 
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand-magenta">
-                      <Ruler size={16} />
+                  <div className="mb-2.5 flex items-center gap-2 px-0.5 sm:mb-3">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand-magenta sm:h-8 sm:w-8">
+                      <Ruler size={14} className="sm:hidden" />
+                      <Ruler size={16} className="hidden sm:block" />
                     </span>
 
-                    <div>
-                      <h2 className="text-[15px] font-bold text-brand-ink sm:text-base">
-                        Dimensions & Product Details
+                    <div className="min-w-0">
+                      <h2 className="truncate text-[13px] font-bold text-brand-ink sm:text-[15px]">
+                        Dimensions & Details
                       </h2>
 
-                      <p className="text-[11px] text-brand-muted sm:text-xs">
-                        Product size and important details
+                      <p className="text-[10px] text-brand-muted sm:text-[11px]">
+                        Product size at a glance
                       </p>
                     </div>
                   </div>
 
-                  <img
-                    src={product.detailsImage}
-                    alt={`${product.name} dimensions and product details`}
-                    className="h-auto w-full rounded-[14px] object-contain"
-                  />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openLightbox(
+                        dimensionsImage,
+                        `${product.name} dimensions`
+                      )
+                    }
+                    aria-label="Zoom dimensions image"
+                    className="group relative flex w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-xl bg-brand-soft/40"
+                  >
+                    <img
+                      src={dimensionsImage}
+                      alt={`${product.name} dimensions and product details`}
+                      className="max-h-[160px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.04] sm:max-h-[190px] lg:max-h-[210px]"
+                    />
+
+                    <span className="absolute bottom-1.5 right-1.5 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold text-brand-ink opacity-90 shadow transition-opacity group-hover:opacity-100 sm:bottom-2 sm:right-2 sm:px-2.5 sm:text-[10px]">
+                      <ZoomIn size={10} />
+                      Show Image
+                    </span>
+                  </button>
                 </div>
               )}
 
               {/* =================================================
                   CUSTOMIZATION INSTRUCTIONS IMAGE
+                  (shown right below the dimensions image)
               ================================================= */}
 
-              {product.instructionImage && (
-                <div className="mt-4 overflow-hidden rounded-[20px] border border-pink-100 bg-white p-3 shadow-sm sm:rounded-[24px] sm:p-4">
+              {instructionImage && (
+                <div className="mt-3 overflow-hidden rounded-2xl border border-pink-100 bg-white p-2.5 shadow-sm transition-shadow hover:shadow-md sm:mt-4 sm:rounded-[22px] sm:p-3.5">
 
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand-purple">
-                      <ImageIcon size={16} />
+                  <div className="mb-2.5 flex items-center gap-2 px-0.5 sm:mb-3">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand-purple sm:h-8 sm:w-8">
+                      <ImageIcon size={14} className="sm:hidden" />
+                      <ImageIcon size={16} className="hidden sm:block" />
                     </span>
 
-                    <div>
-                      <h2 className="text-[15px] font-bold text-brand-ink sm:text-base">
+                    <div className="min-w-0">
+                      <h2 className="truncate text-[13px] font-bold text-brand-ink sm:text-[15px]">
                         How to Customize
                       </h2>
 
-                      <p className="text-[11px] text-brand-muted sm:text-xs">
-                        Follow these simple customization steps
+                      <p className="text-[10px] text-brand-muted sm:text-[11px]">
+                        Simple customization steps
                       </p>
                     </div>
                   </div>
 
-                  <img
-                    src={product.instructionImage}
-                    alt={`${product.name} customization instructions`}
-                    className="h-auto w-full rounded-[14px] object-contain"
-                  />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openLightbox(
+                        instructionImage,
+                        `${product.name} customization instructions`
+                      )
+                    }
+                    aria-label="Zoom customization instructions"
+                    className="group relative flex w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-xl bg-brand-soft/40"
+                  >
+                    <img
+                      src={instructionImage}
+                      alt={`${product.name} customization instructions`}
+                      className="max-h-[160px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.04] sm:max-h-[190px] lg:max-h-[210px]"
+                    />
+
+                    <span className="absolute bottom-1.5 right-1.5 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold text-brand-ink opacity-90 shadow transition-opacity group-hover:opacity-100 sm:bottom-2 sm:right-2 sm:px-2.5 sm:text-[10px]">
+                      <ZoomIn size={10} />
+                       Show Image
+                    </span>
+                  </button>
                 </div>
               )}
 
@@ -608,9 +695,12 @@ Please guide me with the customization details.`
 
               {/* =================================================
                   PRODUCT INFORMATION
+                  (dimensions / features / perfect-for /
+                  making & delivery — whichever fields this
+                  product actually has)
               ================================================= */}
 
-              {product.detailSections?.length > 0 && (
+              {detailSections.length > 0 && (
                 <div className="mt-5 rounded-[20px] border border-pink-100 bg-white p-4 shadow-sm sm:mt-6 sm:rounded-[24px] sm:p-5">
 
                   <div className="flex items-center gap-2">
@@ -631,7 +721,7 @@ Please guide me with the customization details.`
 
                   <div className="mt-4 space-y-4">
 
-                    {product.detailSections.map((section) => (
+                    {detailSections.map((section) => (
                       <div
                         key={section.title}
                         className="rounded-xl bg-brand-soft/50 p-3.5 sm:p-4"
@@ -662,6 +752,28 @@ Please guide me with the customization details.`
                     ))}
 
                   </div>
+
+                  {contactNote && (
+                    <a
+                      href={waLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 flex items-center gap-2.5 rounded-xl bg-[#25D366]/10 p-3 transition-colors hover:bg-[#25D366]/15"
+                    >
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#25D366] text-white">
+                        <WhatsAppIcon size={15} />
+                      </span>
+
+                      <span className="min-w-0">
+                        <span className="block text-[11px] font-bold uppercase tracking-wide text-[#128C4A]">
+                          {contactTitle}
+                        </span>
+                        <span className="block text-[13px] font-semibold text-brand-ink">
+                          {contactNote}
+                        </span>
+                      </span>
+                    </a>
+                  )}
                 </div>
               )}
 
@@ -823,26 +935,27 @@ Please guide me with the customization details.`
 
       <AnimatePresence>
 
-        {lightbox && (
+        {lightboxSrc && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] grid place-items-center bg-brand-ink/90 p-4"
-            onClick={() => setLightbox(false)}
+            className="fixed inset-0 z-[100] grid place-items-center bg-brand-ink/90 p-3 sm:p-4"
+            onClick={() => setLightboxSrc(null)}
           >
 
             <button
               aria-label="Close zoom"
-              onClick={() => setLightbox(false)}
-              className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full bg-white/95 text-brand-ink shadow"
+              onClick={() => setLightboxSrc(null)}
+              className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/95 text-brand-ink shadow sm:right-5 sm:top-5 sm:h-11 sm:w-11"
             >
-              <X size={20} />
+              <X size={18} className="sm:hidden" />
+              <X size={20} className="hidden sm:block" />
             </button>
 
             <motion.img
-              src={product.image}
-              alt={product.name}
+              src={lightboxSrc}
+              alt={lightboxAlt}
               initial={{
                 scale: 0.9,
                 opacity: 0,
@@ -859,10 +972,10 @@ Please guide me with the customization details.`
                 duration: 0.25,
               }}
               onClick={(e) => e.stopPropagation()}
-              className="max-h-[88dvh] max-w-[92vw] cursor-zoom-out rounded-2xl object-contain shadow-2xl"
+              className="max-h-[85dvh] max-w-[94vw] cursor-zoom-out rounded-2xl object-contain shadow-2xl sm:max-h-[88dvh] sm:max-w-[92vw]"
             />
 
-            <p className="absolute bottom-6 text-[11px] text-white/70">
+            <p className="absolute bottom-5 px-4 text-center text-[10px] text-white/70 sm:bottom-6 sm:text-[11px]">
               Tap outside to close
             </p>
 
