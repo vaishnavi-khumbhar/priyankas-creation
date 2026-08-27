@@ -359,36 +359,28 @@ export default function Navbar() {
                       <ChevronDown size={17} className={`transition-transform duration-300 ${dropdown ? "rotate-180" : ""}`} />
                     </button>
 
+                    {/* ── category-only dropdown ── */}
                     <div
-                      className={`absolute left-1/2 top-full z-50 w-[600px] -translate-x-1/2 pt-5 transition-all duration-200 ${
+                      className={`absolute left-1/2 top-full z-50 w-[340px] -translate-x-1/2 pt-5 transition-all duration-200 ${
                         dropdown ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
                       }`}
                     >
                       <div className="overflow-hidden rounded-[24px] border border-pink-100 bg-white shadow-[0_30px_70px_-30px_rgba(80,20,80,.45)]">
                         <div className="h-1 w-full bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple" />
-                        <div className="grid gap-7 p-7 sm:grid-cols-2">
-                          {groups.map(([category, items]) => (
-                            <div key={category}>
-                              <p className="border-b border-pink-100 pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold">
+                        <ul className="grid gap-1 p-3">
+                          {groups.map(([category]) => (
+                            <li key={category}>
+                              <Link
+                                to="/products"
+                                onClick={() => setDropdown(false)}
+                                className="group flex items-center gap-2.5 rounded-xl px-4 py-3 text-[15px] font-semibold text-brand-ink transition-colors hover:bg-brand-soft/70 hover:text-brand-magenta"
+                              >
+                                <span className="h-2 w-2 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70 transition-opacity group-hover:opacity-100" />
                                 {category}
-                              </p>
-                              <ul className="mt-3 grid gap-1">
-                                {items.map((p) => (
-                                  <li key={p.id}>
-                                    <Link
-                                      to={`/product/${p.id}`}
-                                      onClick={() => setDropdown(false)}
-                                      className="group flex items-center gap-2.5 rounded-xl px-2 py-2 text-[15px] text-brand-ink transition-colors hover:bg-brand-soft/70 hover:text-brand-magenta"
-                                    >
-                                      <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70 transition-opacity group-hover:opacity-100" />
-                                      {p.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                              </Link>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                         <Link
                           to="/products"
                           onClick={() => setDropdown(false)}
@@ -576,24 +568,24 @@ export default function Navbar() {
               </button>
             </div>
 
+            {/* ── category-only list (mobile) ── */}
             <div className={`grid transition-all duration-300 ${mobileProducts ? "grid-rows-[1fr] pb-3 pt-2" : "grid-rows-[0fr]"}`}>
               <div className="overflow-hidden">
-                {groups.map(([category, items]) => (
-                  <div key={category} className="mb-3">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold">{category}</p>
-                    <ul className="mt-1.5 grid">
-                      {items.map((p) => (
-                        <li key={p.id}>
-                          <Link to={`/product/${p.id}`} onClick={() => setOpen(false)} className="flex items-center gap-2.5 py-2 text-[15px] text-brand-ink">
-                            <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70" />
-                            {p.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-                <Link to="/products" onClick={() => setOpen(false)} className="block rounded-full bg-brand-soft py-2.5 text-center text-xs font-semibold text-brand-magenta">
+                <ul className="grid gap-0.5">
+                  {groups.map(([category]) => (
+                    <li key={category}>
+                      <Link
+                        to="/products"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-2.5 rounded-xl px-2 py-2.5 text-[15px] font-semibold text-brand-ink"
+                      >
+                        <span className="h-1.5 w-1.5 shrink-0 rotate-45 rounded-[1px] bg-gradient-to-br from-brand-pink to-brand-purple opacity-70" />
+                        {category}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/products" onClick={() => setOpen(false)} className="mt-2 block rounded-full bg-brand-soft py-2.5 text-center text-xs font-semibold text-brand-magenta">
                   View all products →
                 </Link>
               </div>

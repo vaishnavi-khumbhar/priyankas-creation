@@ -11,29 +11,36 @@ import Contact from "./pages/Contact";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="flex min-h-screen flex-col bg-brand-cream">
       <Navbar />
 
-      <Routes>
-        {/* Home */}
-        <Route path="/" element={<Home />} />
+      {/* flex-1 makes this fill any leftover space, so the Footer
+          always sits right at the bottom of the viewport instead of
+          leaving empty space below it when a page (e.g. a category
+          with only 2–4 products) is shorter than the screen. */}
+      <main className="flex-1">
+        <Routes>
+          {/* Home */}
+          <Route path="/" element={<Home />} />
 
-        {/* Products */}
-        <Route path="/products" element={<Products />} />
-        <Route path="/shop" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+          {/* Products */}
+          <Route path="/products" element={<Products />} />
+          <Route path="/shop" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
 
-        {/* Information */}
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+          {/* Information */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
 
-        {/* Fallback */}
-        <Route path="*" element={<Home />} />
-      </Routes>
+          {/* Fallback */}
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </main>
 
-      <Footer />
+      
 
       <WhatsAppWidget />
+      <Footer />
     </div>
   );
 }
