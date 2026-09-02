@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  X, Minus, Plus, Star, Heart, Share2, ShoppingCart,
-  ShieldCheck, Droplets, Truck, Check,
-} from "lucide-react";
+import { X, Minus, Plus, Star, Share2, ShieldCheck, Droplets, Truck, Check } from "lucide-react";
 import { discountOf, WA_NUMBER } from "./ProductCard";
+
+/* This modal receives the product as a prop, so it needs no products import.
+   All fields come straight from the backend product object. */
 
 const WhatsAppIcon = ({ size = 18, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true" className={className}>
@@ -13,28 +13,19 @@ const WhatsAppIcon = ({ size = 18, className = "" }) => (
   </svg>
 );
 
-/* fallbacks — override per product in products.js with `sizes` and `benefits` */
-const DEFAULT_SIZES = ["Standard", "Large"];
-const DEFAULT_BENEFITS = [
-  "100% waterproof, wipe-clean surface",
-  "Personalised with name, photo and theme",
-  "Design shared for your approval before making",
-  "Durable finish built for daily school use",
-];
-
-export default function QuickViewModal({ product, onClose, onAddToCart, onWishlist }) {
+export default function QuickViewModal({ product, onClose }) {
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const sizes = product?.sizes?.length ? product.sizes : DEFAULT_SIZES;
-  const benefits = product?.benefits?.length ? product.benefits : DEFAULT_BENEFITS;
+  const sizes = product?.sizes ?? [];
+  const benefits = product?.benefits ?? [];
 
   useEffect(() => {
     setQty(1);
     setCopied(false);
-    setSize(product?.sizes?.length ? product.sizes[0] : DEFAULT_SIZES[0]);
+    setSize(product?.sizes?.[0] ?? null);
     document.body.style.overflow = product ? "hidden" : "";
     const onKey = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -48,23 +39,8 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
 
   const off = discountOf(product);
   const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-    `Hi Priyanka's Creation! I want to order:\n\n• Product: ${product.name}\n• Size: ${size}\n• Quantity: ${qty}\n• Price: ₹${product.price} each\n\nPlease guide me with the customization details.`
+    `Hi Priyanka's Creation! I want to order:\n\n• Product: ${product.name}${size ? `\n• Size: ${size}` : ""}\n• Quantity: ${qty}\n• Price: ₹${product.price} each\n\nPlease guide me with the customization details.`
   )}`;
-
-  const handleAdd = () => {
-    if (onAddToCart) onAddToCart(product, qty, size);
-    else navigate(`/product/${product.id}`);
-  };
-
-  const handleBuyNow = () => {
-    if (onAddToCart) {
-      onAddToCart(product, qty, size);
-      onClose();
-      navigate("/cart");
-    } else {
-      window.open(waLink, "_blank", "noopener");
-    }
-  };
 
   const handleShare = async () => {
     const url = `${window.location.origin}/product/${product.id}`;
@@ -102,7 +78,7 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
           </button>
 
           <div className="grid lg:grid-cols-2">
-            {/* ── LEFT: image + trust ── */}
+            {/* ── LEFT ── */}
             <div className="bg-gradient-to-br from-brand-soft via-white to-purple-50 p-5 sm:p-6">
               <div className="relative rounded-[22px] bg-white/70 p-4 ring-1 ring-brand-gold/30">
                 {product.tag && (
@@ -111,22 +87,13 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
                   </span>
                 )}
 
-                <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
-                  <button
-                    onClick={() => onWishlist?.(product)}
-                    aria-label="Add to wishlist"
-                    className="grid h-8 w-8 place-items-center rounded-full bg-white text-brand-ink shadow hover:text-brand-magenta"
-                  >
-                    <Heart size={15} />
-                  </button>
-                  <button
-                    onClick={handleShare}
-                    aria-label="Share"
-                    className="grid h-8 w-8 place-items-center rounded-full bg-white text-brand-ink shadow hover:text-brand-magenta"
-                  >
-                    <Share2 size={15} />
-                  </button>
-                </div>
+                <button
+                  onClick={handleShare}
+                  aria-label="Share"
+                  className="absolute right-4 top-4 z-10 grid h-8 w-8 place-items-center rounded-full bg-white text-brand-ink shadow hover:text-brand-magenta"
+                >
+                  <Share2 size={15} />
+                </button>
 
                 <div className="grid aspect-square place-items-center overflow-hidden rounded-[16px]">
                   <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" />
@@ -147,17 +114,17 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
               </div>
             </div>
 
-            {/* ── RIGHT: details ── */}
+            {/* ── RIGHT ── */}
             <div className="p-5 sm:p-7">
               <span className="inline-block rounded-full bg-brand-soft px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-gold">
                 {product.category}
               </span>
 
-              <h3 className="mt-3 font-display text-2xl sm:text-[28px] font-bold leading-snug text-brand-ink">
+              <h3 className="mt-3 font-display text-2xl font-bold leading-snug text-brand-ink sm:text-[28px]">
                 {product.name}
               </h3>
 
-              {product.rating && (
+              {product.rating > 0 && (
                 <div className="mt-2 flex items-center gap-1">
                   {[...Array(5)].map((_, s) => (
                     <Star key={s} size={13} className={s < Math.round(product.rating) ? "fill-brand-gold text-brand-gold" : "text-pink-200"} />
@@ -166,15 +133,12 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
                 </div>
               )}
 
-              {/* price row */}
               <div className="mt-3 flex flex-wrap items-center gap-2.5">
                 <span className="font-display text-3xl font-bold text-green-600">₹{product.price}</span>
                 {product.oldPrice > product.price && (
                   <span className="text-sm text-brand-muted line-through">₹{product.oldPrice}</span>
                 )}
-                {off > 0 && (
-                  <span className="rounded-md bg-green-600 px-2 py-0.5 text-[10px] font-bold text-white">{off}% OFF</span>
-                )}
+                {off > 0 && <span className="rounded-md bg-green-600 px-2 py-0.5 text-[10px] font-bold text-white">{off}% OFF</span>}
                 <button onClick={handleShare} className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-brand-muted hover:text-brand-magenta">
                   {copied ? <><Check size={13} /> Link copied</> : <><Share2 size={13} /> Share</>}
                 </button>
@@ -184,26 +148,27 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
 
               <div className="my-5 h-px bg-pink-100" />
 
-              {/* size + quantity */}
               <div className="flex flex-wrap gap-8">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold">Size</p>
-                  <div className="mt-2 flex gap-2">
-                    {sizes.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => setSize(s)}
-                        className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
-                          size === s
-                            ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
-                            : "border border-pink-200 text-brand-ink hover:border-brand-pink/60"
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    ))}
+                {sizes.length > 0 && (
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold">Size</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {sizes.map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => setSize(s)}
+                          className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
+                            size === s
+                              ? "bg-gradient-to-r from-brand-pink to-brand-purple text-white shadow"
+                              : "border border-pink-200 text-brand-ink hover:border-brand-pink/60"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold">Quantity</p>
@@ -217,45 +182,39 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onWishli
                 </div>
               </div>
 
-              {/* actions */}
-              <div className="mt-5 grid grid-cols-2 gap-3">
-                <button
-                  onClick={handleAdd}
-                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-green-600 text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(22,163,74,.9)] transition-all hover:-translate-y-0.5 hover:bg-green-700"
+              <div className="mt-5 grid gap-3">
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-all hover:-translate-y-0.5"
                 >
-                  <ShoppingCart size={16} /> Add to Cart
-                </button>
+                  <WhatsAppIcon size={19} /> Order via WhatsApp
+                </a>
+
                 <button
-                  onClick={handleBuyNow}
+                  onClick={() => { onClose(); navigate(`/product/${product.id}`); }}
                   className="flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-brand-pink to-brand-purple text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(214,36,159,.9)] transition-all hover:-translate-y-0.5"
                 >
-                  Buy Now
+                  View full details
                 </button>
               </div>
 
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-sm font-semibold text-white shadow-[0_12px_26px_-14px_rgba(37,211,102,.9)] transition-all hover:-translate-y-0.5"
-              >
-                <WhatsAppIcon size={19} /> Order via WhatsApp
-              </a>
-
-              {/* benefits */}
-              <div className="mt-5 rounded-2xl border border-pink-100 bg-brand-soft/50 p-4">
-                <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-magenta">
-                  <Truck size={13} /> Why parents choose this
-                </p>
-                <ul className="mt-2.5 space-y-1.5">
-                  {benefits.map((b) => (
-                    <li key={b} className="flex gap-2 text-[12px] leading-5 text-brand-muted">
-                      <Check size={13} className="mt-0.5 shrink-0 text-green-600" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {benefits.length > 0 && (
+                <div className="mt-5 rounded-2xl border border-pink-100 bg-brand-soft/50 p-4">
+                  <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-magenta">
+                    <Truck size={13} /> Why customers choose this
+                  </p>
+                  <ul className="mt-2.5 space-y-1.5">
+                    {benefits.map((b, k) => (
+                      <li key={k} className="flex gap-2 text-[12px] leading-5 text-brand-muted">
+                        <Check size={13} className="mt-0.5 shrink-0 text-green-600" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               <Link
                 to={`/product/${product.id}`}

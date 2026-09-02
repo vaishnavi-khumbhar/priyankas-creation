@@ -1,15 +1,14 @@
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { products } from "../data/products";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { ArrowRight } from "lucide-react";
+import { useProducts } from "../context/ProductsContext";
 import { CATEGORY_ORDER, slugify } from "../data/categories";
 
 const WA_LINK = `https://wa.me/919130059818?text=${encodeURIComponent(
   "Hi Priyanka's Creation! I want to order a customized product."
 )}`;
 
-/* one slide per category — image comes from that category's first product */
 const NOTES = {
   "Writing & Exam Boards": "Name, photo and the theme your child loves.",
   "Customized Photo Frames": "Turn a favourite photo into a keepsake.",
@@ -18,23 +17,6 @@ const NOTES = {
   "Wedding & Couple Collection": "Names, photo and the date they'll never forget.",
   "Festive & Home Décor": "Handmade pieces for festivals and gifting.",
 };
-
-const slides = CATEGORY_ORDER.map((name) => {
-  const inCategory = products.filter((p) => p.category === name);
-  if (!inCategory.length) return null;
-
-  /* the slider shows this category's first product */
-  const hero = inCategory[0];
-
-  return {
-    name,
-    count: inCategory.length,
-    src: hero.image,
-    heroName: hero.name,
-    note: NOTES[name] || "Made to order, just for you.",
-    to: `/products?category=${slugify(name)}`,
-  };
-}).filter(Boolean);
 
 const WhatsAppIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true" className={className}>
@@ -46,31 +28,51 @@ const chips = ["Waterproof", "Personalized", "Made with care"];
 
 export default function Hero() {
   const reduce = useReducedMotion();
+  const { products } = useProducts();          // ← from the backend
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   const stripRef = useRef(null);
   const pillRefs = useRef([]);
 
+  /* one slide per category, built from whatever products exist right now */
+  const slides = useMemo(
+    () =>
+      CATEGORY_ORDER.map((name) => {
+        const inCategory = products.filter((p) => p.category === name);
+        if (!inCategory.length) return null;
+
+        const hero = inCategory[0];
+        return {
+          name,
+          count: inCategory.length,
+          src: hero.image,
+          heroName: hero.name,
+          note: NOTES[name] || "Made to order, just for you.",
+          to: `/products?category=${slugify(name)}`,
+        };
+      }).filter(Boolean),
+    [products]
+  );
+
+  /* if the backend returns fewer categories, don't leave the index out of range */
+  useEffect(() => {
+    if (i >= slides.length) setI(0);
+  }, [slides.length, i]);
+
   useEffect(() => {
     if (paused || reduce || slides.length < 2) return;
     const t = setInterval(() => setI((p) => (p + 1) % slides.length), 4200);
     return () => clearInterval(t);
-  }, [paused, reduce]);
+  }, [paused, reduce, slides.length]);
 
-  /* On a phone only ~2 category pills fit on screen. When the slider moves
-     to a category further along, scroll that pill into the middle of the
-     strip so the customer always sees which one is showing. */
   useEffect(() => {
     const strip = stripRef.current;
     const el = pillRefs.current[i];
     if (!strip || !el) return;
 
     const target = el.offsetLeft - strip.clientWidth / 2 + el.clientWidth / 2;
-    strip.scrollTo({
-      left: Math.max(0, target),
-      behavior: reduce ? "auto" : "smooth",
-    });
-  }, [i, reduce]);
+    strip.scrollTo({ left: Math.max(0, target), behavior: reduce ? "auto" : "smooth" });
+  }, [i, reduce, slides.length]);
 
   const blob = (d) =>
     reduce ? {} : {
@@ -78,7 +80,8 @@ export default function Hero() {
       transition: { duration: d, repeat: Infinity, ease: "easeInOut" },
     };
 
-  const active = slides[i];
+  const active = slides[i] || slides[0];
+  if (!active) return null;                    // no products yet — render nothing
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-soft via-white to-purple-50">
@@ -207,9 +210,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ══════════ CATEGORY STRIP — under the slider ══════════ */}
+      {/* ══════════ CATEGORY STRIP ══════════ */}
       <div className="container-page relative pb-12 lg:pb-16">
-        {/* live caption for the slide currently showing */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active.name}
@@ -234,7 +236,6 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* all categories — scrolls sideways on mobile, centred on desktop */}
         <div
           ref={stripRef}
           className="-mx-4 mt-6 scroll-px-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0"
@@ -259,9 +260,7 @@ export default function Hero() {
                       : "border-pink-200 bg-white text-brand-ink hover:border-brand-pink/50"
                   }`}
                 >
-                  <span className="block text-[13px] font-bold leading-[1.35] sm:text-[15px]">
-                    {s.name}
-                  </span>
+                  <span className="block text-[13px] font-bold leading-[1.35] sm:text-[15px]">{s.name}</span>
                   <span
                     className={`text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-[11px] ${
                       i === k ? "text-white/80" : "text-brand-gold"

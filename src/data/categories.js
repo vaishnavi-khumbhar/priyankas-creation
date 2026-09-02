@@ -1,16 +1,20 @@
-/*  One place that defines your catalogue structure.
-    `products.js`, the filter tabs and the homepage sections all read this,
-    so adding a category is a one-line change here.
-
-    `sub` is only documentation for now — the products themselves carry the
-    top-level `category`. When a category grows past ~8 products, we can turn
-    `sub` into a second filter row.                                          */
+/* ============================================================
+   CATEGORIES
+   ------------------------------------------------------------
+   `name` = Frontend वर दिसणारे नाव
+   `slug` = URL मध्ये वापरला जाणारा clean name
+   ============================================================ */
 
 export const CATEGORIES = [
   {
     name: "Writing & Exam Boards",
-    sub: ["Personalized Kids Writing Board", "Customized Exam Board", "Photo & Name Writing Board"],
+    sub: [
+      "Personalized Kids Writing Board",
+      "Customized Exam Board",
+      "Photo & Name Writing Board",
+    ],
   },
+
   {
     name: "Customized Photo Frames",
     sub: [
@@ -22,10 +26,17 @@ export const CATEGORIES = [
       "Memorial Photo Frame",
     ],
   },
+
   {
     name: "Premium Customized Frames",
-    sub: ["Resin Art Frame", "Acrylic Photo Frame", "Photo Collage Frame", "Customized Name Frame"],
+    sub: [
+      "Resin Art Frame",
+      "Acrylic Photo Frame",
+      "Photo Collage Frame",
+      "Customized Name Frame",
+    ],
   },
+
   {
     name: "Kitchen Collection",
     sub: [
@@ -35,22 +46,70 @@ export const CATEGORIES = [
       "Personalized Swayampakghar Frame",
     ],
   },
+
   {
     name: "Wedding & Couple Collection",
-    sub: ["Gathbandhan Frame", "Couple Name Frame", "Wedding Memory Frame"],
+    sub: [
+      "Gathbandhan Frame",
+      "Couple Name Frame",
+      "Wedding Memory Frame",
+    ],
   },
+
   {
     name: "Festive & Home Décor",
-    sub: ["Shubh-Labh Wall Hanging"],
+    sub: [
+      "Shubh-Labh Wall Hanging",
+    ],
   },
 ];
 
-/* display order for the filter tabs and the homepage sections */
-export const CATEGORY_ORDER = CATEGORIES.map((c) => c.name);
+/* ============================================================
+   CATEGORY ORDER
+   ============================================================ */
 
-export const slugify = (s) =>
-  s
+export const CATEGORY_ORDER = CATEGORIES.map(
+  (category) => category.name
+);
+
+/* ============================================================
+   SLUGIFY
+   ------------------------------------------------------------
+   Examples:
+   Writing & Exam Boards
+   → writing-and-exam-boards
+
+   Wedding & Couple Collection
+   → wedding-and-couple-collection
+   ============================================================ */
+
+export const slugify = (value = "") => {
+  return String(value)
+    .trim()
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+    .replace(/^-+|-+$/g, "");
+};
+
+/* ============================================================
+   FIND CATEGORY BY SLUG
+   ============================================================ */
+
+export const getCategoryBySlug = (slug = "") => {
+  const cleanSlug = slugify(slug);
+
+  return CATEGORIES.find(
+    (category) => slugify(category.name) === cleanSlug
+  );
+};
+
+/* ============================================================
+   GET DISPLAY NAME FROM URL SLUG
+   ============================================================ */
+
+export const getCategoryNameFromSlug = (slug = "") => {
+  const category = getCategoryBySlug(slug);
+
+  return category ? category.name : "";
+};

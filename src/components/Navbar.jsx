@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
-import { products } from "../data/products";
+import { useProducts } from "../context/ProductsContext";
 
 import logo from "../assets/logo_r.png";
 const LOGO = logo;
@@ -154,13 +154,16 @@ export default function Navbar() {
   const closeTimer = useRef(null);
   const searchInput = useRef(null);
 
-  const groups = groupByCategory(products);
+  const { products } = useProducts();          /* ← live from the backend */
+
+  /* the dropdown lists CATEGORIES, not every product */
+  const groups = useMemo(() => groupByCategory(products), [products]);
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
     if (!term) return [];
     return products.filter((p) => `${p.name} ${p.category}`.toLowerCase().includes(term)).slice(0, 6);
-  }, [q]);
+  }, [q, products]);
 
   const submitSearch = (e) => {
     e?.preventDefault();

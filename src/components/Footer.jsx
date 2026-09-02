@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Facebook, Mail, Phone, Clock, MapPin, Heart } from "lucide-react";
 import logo from "../assets/logo.jpg";
-import { products } from "../data/products";
+import { useProducts } from "../context/ProductsContext";
 import { CATEGORY_ORDER, slugify } from "../data/categories";
 
 /* ── edit these ── */
@@ -23,7 +24,6 @@ const nav = [
   ["Products", "/products"],
   ["About Us", "/about"],
   ["Contact", "/contact"],
-  ["Cart", "/cart"],
 ];
 
 const WhatsAppIcon = ({ size = 18, className = "" }) => (
@@ -39,12 +39,6 @@ const socials = [
   { href: `mailto:${EMAIL}`, label: "Email", Icon: Mail },
 ];
 
-/* only categories that actually have products, in your defined order */
-const footerCategories = CATEGORY_ORDER.filter((c) =>
-  products.some((p) => p.category === c)
-);
-
-/* script headings need room — never leading-none with font-script */
 const heading =
   "bg-gradient-to-r from-brand-pink via-brand-magenta to-brand-purple bg-clip-text pb-1 font-script text-[30px] leading-[1.45] text-transparent sm:text-[34px]";
 
@@ -52,6 +46,14 @@ const colLink =
   "group inline-flex items-start gap-1.5 text-brand-muted transition-colors hover:text-brand-magenta";
 
 export default function Footer() {
+  const { products } = useProducts();          // ← from the backend
+
+  /* only categories that actually have products right now */
+  const footerCategories = useMemo(
+    () => CATEGORY_ORDER.filter((c) => products.some((p) => p.category === c)),
+    [products]
+  );
+
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF5] via-[#FFFBEF] to-[#FFF7E6] text-brand-ink">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent" />
@@ -114,7 +116,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ── categories (was individual products) ── */}
+          {/* ── categories ── */}
           <div className="lg:col-span-3">
             <h3 className={heading}>Our Products</h3>
             <ul className="mt-4 grid gap-3.5 text-[17px] sm:text-[18px]">
@@ -168,7 +170,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── bottom bar ── */}
         <div className="mt-12 border-t border-brand-gold/25 py-6">
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <p className="text-[15px] font-medium leading-6 text-brand-muted">

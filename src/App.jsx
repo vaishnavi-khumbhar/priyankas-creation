@@ -8,8 +8,10 @@ import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import { usePageTracking } from "./lib/usePageTracking";
 
 export default function App() {
+   usePageTracking();  
   return (
     <div className="flex min-h-screen flex-col bg-brand-cream">
       <Navbar />

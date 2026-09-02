@@ -1,63 +1,54 @@
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import ProductCard from "./ProductCard";
-import { products } from "../data/products";
+import { useProducts } from "../context/ProductsContext";
+import { slugify } from "../data/categories";
 
-export default function RelatedProducts({ currentId, category, limit = 4 }) {
+export default function RelatedProducts({ currentId, category }) {
   const reduce = useReducedMotion();
+  const { products } = useProducts();
 
-  const sameCategory = products.filter(
-    (p) => p.id !== currentId && p.category === category
+  const list = useMemo(
+    () =>
+      products
+        .filter((p) => p.category === category && String(p.id) !== String(currentId))
+        .slice(0, 4),
+    [products, category, currentId]
   );
-
-  const others = products.filter(
-    (p) => p.id !== currentId && p.category !== category
-  );
-
-  const list = [...sameCategory, ...others].slice(0, limit);
 
   if (!list.length) return null;
 
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-brand-cream py-10 lg:py-14">
       <div className="container-page">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-xl text-center"
-        >
-          <span className="inline-flex items-center rounded-full bg-brand-soft px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold ring-1 ring-brand-gold/40">
-            You may also like
-          </span>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="pb-0.5 font-script text-[26px] leading-[1.4] text-brand-pink sm:text-3xl">
+              You may also like
+            </p>
+            <h2 className="font-display text-2xl font-bold text-brand-ink sm:text-3xl">
+              More from {category}
+            </h2>
+          </div>
 
-          <h2 className="mt-4 font-display text-4xl font-bold text-brand-ink sm:text-4xl">
-            Related{" "}
-            <span className="bg-gradient-to-r from-brand-pink to-brand-purple bg-clip-text text-transparent">
-              Products
-            </span>
-          </h2>
+          <Link
+            to={`/products?category=${slugify(category || "")}`}
+            className="group inline-flex items-center gap-1.5 text-sm font-semibold text-brand-magenta"
+          >
+            View all <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
 
-         <p
-  className="mt-3 text-base leading-7 text-brand-muted font-medium"
-  style={{ fontFamily: "'Poppins', sans-serif" }}
->
-  More personalized creations made with the same care — name, photo, and
-  theme of your choice.
-</p>
-        </motion.div>
-
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
           {list.map((p, k) => (
             <motion.div
               key={p.id}
-              initial={{ opacity: 0, y: 26 }}
+              initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.5,
-                delay: reduce ? 0 : k * 0.07,
-              }}
+              transition={{ duration: 0.45, delay: reduce ? 0 : k * 0.07 }}
               whileHover={reduce ? {} : { y: -6 }}
             >
               <ProductCard product={p} />
