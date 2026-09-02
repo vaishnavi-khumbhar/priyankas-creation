@@ -8,11 +8,11 @@ import { CATEGORY_ORDER, slugify } from "../data/categories";
 /* ── edit these ── */
 const AGENCY_NAME = "Advertising Branding & Marketing";
 const AGENCY_URL = "https://www.advertisingandbrandingmarketing.com/";
-const INSTAGRAM = "https://instagram.com/priyankascreationn";
-const FACEBOOK = "https://facebook.com/";   // ← real page, or delete this entry in `socials`
+const INSTAGRAM = "https://www.instagram.com/priyankascreationn?igsi=MXZua2R1a3l0b25wZQ==";
+const FACEBOOK = "https://www.facebook.com/share/18V8SMDYm6/";   // ← real page, or delete this entry in `socials`
 
 const PHONE = "9130059818";
-const WA = "919130059818";
+const WA = "9130059818";
 const EMAIL = "priyankas.creation230626@gmail.com";
 const HOURS = "10 AM – 6 PM";
 const WA_LINK = `https://wa.me/${WA}?text=${encodeURIComponent(
