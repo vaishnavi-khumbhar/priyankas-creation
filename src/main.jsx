@@ -8,8 +8,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter basename="/priyankas-creation">
-      {/* loads products from the backend once and shares them with every page */}
+<BrowserRouter>      {/* loads products from the backend once and shares them with every page */}
       <ProductsProvider>
         <App />
       </ProductsProvider>
